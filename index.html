@@ -6,109 +6,135 @@
 <title>I LOVE U MELLO</title>
 <style>
   :root{
-    --bg1:#fff6f8; --bg2:#ffe0ed;
-    --accent:#ff2f86;
+    --bg-start: #fff7f8;
+    --bg-end:   #ffe9f0;
+    --accent:   #ff4da6;
+    --soft-text: #ffffff;
   }
-  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:linear-gradient(180deg,var(--bg1),var(--bg2));}
-  .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
-  /* header text */
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:linear-gradient(180deg,var(--bg-start),var(--bg-end)); color:#222}
+  .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;box-sizing:border-box}
+  /* Title */
   .title{
-    position:fixed;top:28px;left:50%;transform:translateX(-50%);
-    font-weight:800;font-size:clamp(22px,5vw,44px);
-    background:linear-gradient(90deg,#ff9dcf,#ff4da6);-webkit-background-clip:text;background-clip:text;color:transparent;
-    text-transform:uppercase;letter-spacing:1px;z-index:30;pointer-events:none;
-    text-shadow:0 6px 20px rgba(255,60,130,0.12);
+    position:fixed; top:24px; left:50%; transform:translateX(-50%);
+    font-size:clamp(22px,5.5vw,44px); font-weight:900;
+    background:linear-gradient(90deg,#ffb0d0,#ff5f9f); -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-transform:uppercase; letter-spacing:1px; z-index:60; pointer-events:none;
+    text-shadow:0 10px 30px rgba(255,80,150,0.12);
   }
 
-  /* stage card */
+  /* card stage */
   .stage{
-    width:min(980px,96vw);
-    height:min(78vh,820px);
-    background:rgba(255,255,255,0.95);
-    border-radius:20px;
-    box-shadow: 0 22px 70px rgba(0,0,0,0.12);
-    position:relative;overflow:hidden;padding:22px;display:flex;align-items:center;justify-content:center;
+    width:min(980px,96vw); max-width:1100px;
+    background:rgba(255,255,255,0.96);
+    border-radius:20px; box-shadow:0 24px 80px rgba(0,0,0,0.12);
+    padding:22px; position:relative; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; gap:16px;
   }
 
-  /* image container */
-  .img-wrap{position:relative;z-index:2;max-width:900px;width:90%;height:auto;display:flex;align-items:center;justify-content:center}
-  .img-wrap img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,0.08);}
+  /* spotlight under image */
+  .spot{ position:absolute; left:50%; bottom:8%; transform:translateX(-50%); width:760px; height:220px; border-radius:50%;
+    background:radial-gradient(circle at 50% 30%, rgba(255,235,245,0.95), rgba(255,205,230,0.6) 45%, transparent 70%);
+    filter:blur(28px); z-index:2; pointer-events:none; }
 
-  /* subtle spotlight under characters */
-  .spot{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);width:700px;height:220px;border-radius:50%;background:radial-gradient(circle at 50% 30%, rgba(255,235,245,0.95), rgba(255,200,230,0.6) 45%, transparent 70%);filter:blur(28px);z-index:1}
+  /* hearts falling background (subtle) */
+  .hearts-bg{ position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+  .hearts-bg i{ position:absolute; font-style:normal; color:#ff9fbf; opacity:0.95; font-size:18px; animation:heartFall linear infinite; filter:drop-shadow(0 8px 14px rgba(0,0,0,0.06)); }
+  @keyframes heartFall{
+    0%{ transform:translateY(-10vh) scale(.6) rotate(-6deg); opacity:0; }
+    8%{ opacity:1; }
+    100%{ transform:translateY(110vh) scale(1.05) rotate(8deg); opacity:0; }
+  }
 
-  /* floating hearts in background */
-  .hearts{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
-  .hearts i{position:absolute;font-style:normal;opacity:.9;font-size:18px;animation:heartUp linear infinite}
-  @keyframes heartUp{0%{transform:translateY(110vh) scale(.6) rotate(-8deg);opacity:0}8%{opacity:1}100%{transform:translateY(-40vh) scale(1.05) rotate(12deg);opacity:0}}
+  /* main image area */
+  .img-wrap{ position:relative; z-index:10; width:88%; max-width:860px; display:flex; justify-content:center; align-items:center; padding:18px; box-sizing:border-box; }
+  .img-wrap img{ width:100%; height:auto; display:block; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,0.08); }
 
-  /* notes that spawn (absolute on body) */
-  .note{position:fixed;z-index:40;pointer-events:none;font-size:28px;filter:drop-shadow(0 10px 16px rgba(0,0,0,0.12));will-change:transform,opacity,left,top}
+  /* visual mic (between joined hands) */
+  .mic-vis{ position:absolute; left:50%; transform:translateX(-50%); bottom:44%; z-index:30; pointer-events:none; display:flex; align-items:center; justify-content:center; }
+  .mic-vis .head{ width:44px; height:44px; border-radius:999px; background:linear-gradient(180deg,#333,#111); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:18px; box-shadow:0 10px 22px rgba(0,0,0,0.18);}
+  .mic-vis .stick{ width:8px; height:94px; background:linear-gradient(#222,#444); border-radius:6px; position:absolute; bottom:0; }
 
-  /* microphone (visual) in front of join */
-  .mic-visual{position:absolute;left:50%;bottom:46%;transform:translateX(-50%);z-index:25;pointer-events:none;display:flex;align-items:center;justify-content:center}
-  .mic-visual .head{width:44px;height:44px;border-radius:999px;background:linear-gradient(180deg,#333,#111);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px}
-  .mic-visual .stick{width:8px;height:94px;background:linear-gradient(#222,#444);border-radius:6px;position:absolute;bottom:0}
+  /* musical notes (created by JS) */
+  .note{ position:fixed; z-index:90; pointer-events:none; font-size:28px; filter:drop-shadow(0 10px 16px rgba(0,0,0,0.12)); will-change:transform,opacity,left,top; }
 
-  /* responsive */
-  @media(max-width:720px){
-    .title{font-size:20px}
-    .note{font-size:22px}
-    .mic-visual .head{width:36px;height:36px;font-size:14px}
+  /* small control hint (hidden on mobile) */
+  .hint{ position:fixed; right:18px; bottom:18px; font-size:13px; color:#666; z-index:80; background:rgba(255,255,255,0.6); padding:8px 10px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+  @media(max-width:640px){ .hint{ display:none } }
+
+  /* reduce motion */
+  @media (prefers-reduced-motion: reduce){
+    .hearts-bg i{ animation:none; opacity:0.7; transform:none; }
   }
 </style>
 </head>
 <body>
-  <div class="page">
+  <div class="container">
     <div class="title">💖 I LOVE U MELLO 💖</div>
 
-    <div class="stage" role="main" aria-label="I LOVE U MELLO — duet cute">
-      <div class="hearts" aria-hidden="true"></div>
+    <div class="stage" role="main" aria-label="I LOVE U MELLO — cute duet">
+      <div class="hearts-bg" aria-hidden="true"></div>
       <div class="spot" aria-hidden="true"></div>
 
       <div class="img-wrap" id="imgWrap">
-        <!-- IMPORTANT: place the image file 'couple.png' in same folder -->
-        <img id="coupleImg" src="couple.png" alt="Couple singing while holding hands">
+        <!-- PENTING: letakkan file gambar yang kamu attach dengan nama 'couple.png' di folder yang sama -->
+        <img id="coupleImg" src="couple.png" alt="Couple holding hands singing">
       </div>
 
-      <div class="mic-visual" aria-hidden="true">
+      <div class="mic-vis" aria-hidden="true">
         <div class="head">♪</div>
         <div class="stick"></div>
       </div>
+
     </div>
+
+    <div class="hint">Jika posisi not meleset, ubah <code>leftMouthPercent</code> & <code>rightMouthPercent</code> di script.</div>
   </div>
 
 <script>
-/*
-  Notes animation script.
-  - Make sure 'couple.png' is in same folder as this HTML.
-  - Jika not keluar sedikit meleset, ubah leftMouthPercent / rightMouthPercent (0..1).
-*/
+/* SETTINGS: sesuaikan jika perlu */
+const leftMouthPercent  = { x: 0.375, y: 0.485 }; // proporsi relatif pada gambar (0..1)
+const rightMouthPercent = { x: 0.625, y: 0.485 };
+const HEART_COUNT = 12;    // jumlah love falling (tidak ramai)
+const HEART_MIN_SIZE = 14;
+const HEART_MAX_SIZE = 28;
 
-// default mouth positions (percent of image width/height). Sesuaikan bila perlu.
-// nilai ini dibuat untuk gambar yang mirip gambar yang kamu attach.
-const leftMouthPercent  = { x: 0.37, y: 0.48 };
-const rightMouthPercent = { x: 0.63, y: 0.48 };
-
-// reduced motion support
+/* Reduced motion support */
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(prefersReduced){
-  // no animation if user opts for reduced motion
-  document.querySelectorAll('.hearts i').forEach(i=>i.style.animation='none');
-}
 
-// spawn a musical note at page coordinates (px,py)
+/* create subtle falling hearts */
+(function spawnHearts(){
+  const container = document.querySelector('.hearts-bg');
+  for(let i=0;i<HEART_COUNT;i++){
+    const el = document.createElement('i');
+    el.innerText = '❤';
+    // random left across wide area but bias toward center
+    const left = 8 + Math.random()*84;
+    el.style.left = left + 'vw';
+    el.style.fontSize = (HEART_MIN_SIZE + Math.random()*(HEART_MAX_SIZE-HEART_MIN_SIZE)) + 'px';
+    // random speed and delay (longer durations so it's not busy)
+    el.style.animationDuration = (9 + Math.random()*8) + 's';
+    el.style.bottom = (-40 - Math.random()*20) + 'vh';
+    el.style.opacity = 0.9 - Math.random()*0.3;
+    // slight horizontal drift using transform in CSS isn't necessary here; JS-free
+    container.appendChild(el);
+    if(prefersReduced) el.style.animation = 'none';
+  }
+})();
+
+/* ---------- NOTES ANIMATION ---------- */
+// spawn note at page coords px,py
 function spawnNoteAt(px, py){
   if(prefersReduced) return;
   const n = document.createElement('div');
   n.className = 'note';
   n.innerText = Math.random() > 0.5 ? '🎵' : '🎶';
+  // start position
   n.style.left = px + 'px';
   n.style.top  = py + 'px';
   n.style.opacity = '1';
   document.body.appendChild(n);
 
-  const duration = 2600 + Math.random()*1200;
+  const duration = 2400 + Math.random()*1200;
   const start = performance.now();
   const startX = px;
   const drift = (Math.random()*80 - 40);
@@ -116,19 +142,21 @@ function spawnNoteAt(px, py){
   function frame(now){
     const t = (now - start) / duration;
     if(t >= 1){ n.remove(); return; }
-    const currentY = py - (t * 240); // rise
-    const currentX = startX + Math.sin(t * Math.PI * 2) * 14 + drift * t * 0.25;
-    const scale = 1 + t * 0.35;
+    // vertical rise
+    const currentY = py - (t * 240);
+    // subtle wobble horizontal
+    const currentX = startX + Math.sin(t * Math.PI * 2) * 14 + drift * t * 0.22;
+    const scale = 1 + t * 0.36;
     n.style.left = currentX + 'px';
     n.style.top  = currentY + 'px';
-    n.style.transform = `scale(${scale}) rotate(${t*30}deg)`;
+    n.style.transform = `scale(${scale}) rotate(${t*28}deg)`;
     n.style.opacity = String(1 - t*1.05);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 }
 
-// compute image-mouth coordinates in page coordinates
+// compute page coordinates of each mouth using image bounding box
 function mouthPageCoords(){
   const img = document.getElementById('coupleImg');
   const rect = img.getBoundingClientRect();
@@ -139,50 +167,41 @@ function mouthPageCoords(){
   return { leftX, leftY, rightX, rightY };
 }
 
-// alternating duet spawn
+// alternate duet timing
 let turn = 0;
 function duetTick(){
   const c = mouthPageCoords();
   if(turn % 2 === 0){
-    spawnNoteAt(c.leftX, c.leftY);
-    setTimeout(()=> spawnNoteAt(c.rightX, c.rightY), 300);
+    spawnNoteAt(c.leftX,  c.leftY);
+    setTimeout(()=> spawnNoteAt(c.rightX, c.rightY), 320);
   } else {
     spawnNoteAt(c.rightX, c.rightY);
-    setTimeout(()=> spawnNoteAt(c.leftX, c.leftY), 300);
+    setTimeout(()=> spawnNoteAt(c.leftX,  c.leftY), 320);
   }
   turn++;
 }
 
-// start when image loaded (or immediately if cached)
+// start the notes after image has loaded and layout stabilized
 const img = document.getElementById('coupleImg');
 function startNotes(){
   if(prefersReduced) return;
-  // initial burst
-  duetTick();
+  duetTick(); // initial
   window._noteInterval = setInterval(duetTick, 900);
 }
-// try to start after load/layout stable
 if(img.complete){
+  // small delay so bounding box stable
   setTimeout(startNotes, 300);
 } else {
   img.addEventListener('load', ()=> setTimeout(startNotes, 300));
-  img.addEventListener('error', ()=> console.warn('Gagal memuat couple.png — periksa nama/file path.'));
+  img.addEventListener('error', ()=> console.warn('Gagal memuat couple.png — pastikan file ada dan nama tepat.'));
 }
 
-// create floating hearts
-(function spawnHearts(){
-  const HN = 22;
-  const hearts = document.querySelector('.hearts');
-  for(let i=0;i<HN;i++){
-    const e = document.createElement('i');
-    e.innerText = '❤';
-    e.style.left = (Math.random()*100) + 'vw';
-    e.style.fontSize = (12 + Math.random()*28) + 'px';
-    e.style.animationDuration = (7 + Math.random()*8) + 's';
-    e.style.bottom = (-60 - Math.random()*40) + 'vh';
-    hearts.appendChild(e);
-  }
-})();
+// on resize/scroll the coords are computed on the fly so notes remain aligned
+
+// Accessibility: if user prefers reduced motion, clear interval
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  if(window._noteInterval) clearInterval(window._noteInterval);
+}
 </script>
 </body>
 </html>
