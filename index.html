@@ -11,7 +11,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      background: radial-gradient(circle at top, #ffdee9, #ff9a9e);
       font-family: 'Comic Sans MS', cursive, sans-serif;
       overflow: hidden;
       position: relative;
@@ -19,35 +19,47 @@
     h1 {
       font-size: 3em;
       color: #fff;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
-      margin-bottom: 40px;
+      text-shadow: 0 0 10px #ff4da6, 0 0 20px #ff80bf;
+      margin-bottom: 30px;
+      z-index: 3;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ff4da6, 0 0 10px #ff80bf; }
+      to   { text-shadow: 0 0 20px #ff1a8c, 0 0 40px #ff66b2; }
+    }
+    .stage {
+      display: flex;
+      align-items: flex-end;
+      gap: 80px;
       z-index: 2;
     }
-    .couple {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      z-index: 2;
-      font-size: 4em;
-      animation: sing 1s infinite alternate;
+    .singer {
+      width: 150px;
+      animation: sway 2s infinite ease-in-out alternate;
     }
-    .boy, .girl {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    @keyframes sway {
+      from { transform: rotate(-3deg) translateY(0); }
+      to   { transform: rotate(3deg) translateY(-5px); }
+    }
+    .mic {
+      font-size: 3em;
+      animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-10px); }
     }
     .note {
-      font-size: 1em;
-      animation: floatNote 2s infinite ease-in-out;
-      opacity: 0.8;
+      position: absolute;
+      font-size: 1.5em;
+      animation: flyNote 4s linear infinite;
+      opacity: 0;
     }
-    @keyframes sing {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
-    }
-    @keyframes floatNote {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-30px); opacity: 0; }
+    @keyframes flyNote {
+      0%   { transform: translateY(0) scale(0.5); opacity: 0; }
+      20%  { opacity: 1; }
+      100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
     }
     .hearts {
       position: absolute;
@@ -73,9 +85,11 @@
 <body>
   <h1>💖 I LOVE U MELLO 💖</h1>
   
-  <div class="couple">
-    <div class="boy">👦<div class="note">🎵</div></div>
-    <div class="girl">👧<div class="note">🎶</div></div>
+  <div class="stage">
+    <!-- pasangan pakai ilustrasi SVG sederhana -->
+    <img src="https://cdn-icons-png.flaticon.com/512/3565/3565418.png" class="singer" alt="Boy">
+    <div class="mic">🎤</div>
+    <img src="https://cdn-icons-png.flaticon.com/512/3565/3565415.png" class="singer" alt="Girl">
   </div>
 
   <div class="hearts"></div>
@@ -92,6 +106,18 @@
       heart.innerText = '❤️';
       hearts.appendChild(heart);
     }
+
+    // generate floating notes dari mic
+    setInterval(() => {
+      const note = document.createElement('div');
+      note.className = 'note';
+      note.innerText = Math.random() > 0.5 ? '🎵' : '🎶';
+      note.style.left = '50%';
+      note.style.bottom = '150px';
+      note.style.animationDuration = (Math.random()*2+3)+'s';
+      document.body.appendChild(note);
+      setTimeout(() => note.remove(), 4000);
+    }, 800);
   </script>
 </body>
 </html>
