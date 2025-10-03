@@ -1,332 +1,118 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>I LOVE U MELLO — Cute Animation</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>I LOVE U MELLO</title>
   <style>
-    :root{
-      --bg1: #fff7fb;
-      --bg2: #fffefb;
-      --accent: #ff9aa2;
-      --soft-1: #ffdede;
-      --soft-2: #ffe9f0;
-      --note-size: 26px;
-      --max-width: 720px;
-    }
-
-    /* Page */
-    html,body{height:100%}
     body{
       margin:0;
-      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       display:flex;
-      align-items:center;
       justify-content:center;
-      background: radial-gradient(circle at 10% 10%, #fff6f8 0%, transparent 20%),
-                  linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
-      color:#4b3b4f;
-      -webkit-font-smoothing:antialiased;
-      padding:32px;
+      align-items:center;
+      height:100vh;
+      background:linear-gradient(180deg,#fff7fb,#fffefb);
+      font-family:"Comic Sans MS",cursive, sans-serif;
+      overflow:hidden;
     }
-
-    /* Card */
-    .card{
-      width: min(96vw, var(--max-width));
+    .container{
       text-align:center;
-      border-radius:20px;
-      padding:28px;
-      box-shadow: 0 8px 30px rgba(72,48,70,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,250,252,0.95));
       position:relative;
-      overflow:visible;
     }
-
     h1{
-      margin:0 0 18px 0;
-      font-size: clamp(24px, 4vw, 36px);
-      letter-spacing: 2px;
       color:#6f3b5a;
-      font-weight:700;
-      text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+      margin-bottom:15px;
+      font-size:28px;
+      letter-spacing:2px;
+      text-shadow:0 1px 2px rgba(0,0,0,0.1);
     }
-
-    h1 .heart-inline{
-      display:inline-block;
-      width:18px;
-      height:18px;
-      margin-left:8px;
-      transform: translateY(-2px);
-    }
-
-    /* Image container */
-    .stage{
-      position:relative;
-      display:inline-block;
-      max-width:100%;
-      margin:6px auto 8px;
-    }
-    .stage img{
-      display:block;
-      width: min(560px, 82vw);
+    img{
+      width:320px;
       height:auto;
-      filter: drop-shadow(0 6px 18px rgba(102,70,90,0.06));
-      border-radius:12px;
+      display:block;
+      margin:0 auto;
     }
 
-    /* Musical notes (from mouths) */
-/* Musical notes (dari mulut anak) */
-.note{
-  position:absolute;
-  pointer-events:none;
-  font-size: var(--note-size);
-  user-select:none;
-}
-
-.note span{
-  position:absolute;
-  opacity:0;
-  animation: floatNote 3s ease-in-out infinite;
-}
-
-.note span:nth-child(1){ left:0; animation-delay:0s; }
-.note span:nth-child(2){ left:12px; animation-delay:0.6s; }
-.note span:nth-child(3){ left:-12px; animation-delay:1.2s; }
-
-    /* left child's mouth approx position - tweak if needed */
-    .note.left { left: 24%; top: 40%; color:#ffb3b8; }
-    .note.right { left: 66%; top: 40%; color:#ffc6d0; }
-
-    /* Each individual animated note */
-    .note .symbol{
-      display:inline-block;
-      transform: translateY(0) scale(0.9) rotate(0deg);
-      animation: sing 2.4s ease-in-out infinite;
-    }
-    .note .symbol:nth-child(2){ animation-delay: .28s; }
-    .note .symbol:nth-child(3){ animation-delay: .6s; }
-
-@keyframes floatNote {
-  0%   { transform: translateY(0) scale(0.9); opacity:0; }
-  10%  { opacity:1; }
-  40%  { transform: translateY(-40px) scale(1.05) rotate(10deg); opacity:1; }
-  70%  { transform: translateY(-80px) scale(0.9) rotate(-10deg); opacity:0.6; }
-  100% { transform: translateY(-120px) scale(0.7) rotate(-20deg); opacity:0; }
-}
-
-    /* little pulsing hearts next to kids */
-    .mini-heart{
+    /* Not-not musik */
+    .note{
       position:absolute;
-      width:14px;
-      height:14px;
-      transform-origin:center;
-      opacity:0.95;
-      animation: pop 1.6s infinite ease-in-out;
-      pointer-events:none;
+      font-size:22px;
+      color:#ff9aa2;
+      opacity:0;
+      animation:floatNote 3s ease-in-out infinite;
     }
-    .mini-heart.left{ left: 12%; top: 14%; animation-delay:.1s; }
-    .mini-heart.right{ left: 86%; top: 16%; animation-delay:.25s; }
-    @keyframes pop{
-      0%{ transform:translateY(0) scale(.8); opacity:0; }
-      10%{ opacity:1; transform:translateY(-6px) scale(1.06); }
-      50%{ transform:translateY(-12px) scale(.9); opacity:0.9; }
-      100%{ transform:translateY(-22px) scale(.6); opacity:0; }
+    .note.right{ left:64%; top:48%; color:#ffb3c1; }
+    .note.left{ left:30%; top:48%; color:#ffccd5; }
+
+    .note:nth-child(1){ animation-delay:0s; }
+    .note:nth-child(2){ animation-delay:.8s; }
+    .note:nth-child(3){ animation-delay:1.6s; }
+
+    @keyframes floatNote{
+      0%{ transform:translateY(0) scale(0.9); opacity:0; }
+      10%{ opacity:1; }
+      40%{ transform:translateY(-40px) scale(1.1) rotate(10deg); opacity:1; }
+      70%{ transform:translateY(-80px) scale(0.9) rotate(-10deg); opacity:.6; }
+      100%{ transform:translateY(-120px) scale(0.7) rotate(-20deg); opacity:0; }
     }
 
-    /* Falling hearts container — keep small number for "not too ramai" */
-    .hearts{
-      pointer-events:none;
-      position:absolute;
-      left:0; right:0; top:0; bottom:0;
-      overflow:visible;
-      z-index: -1; /* behind the card content */
-    }
-
+    /* Hati jatuh */
     .heart{
       position:absolute;
       width:18px;
       height:18px;
-      transform:translateY(-20vh);
-      opacity:0;
-      will-change:transform, opacity;
-      animation-name: fall, wobble;
-      animation-timing-function: linear, ease-in-out;
-      animation-iteration-count: 1, infinite;
+      background:#ff9aa2;
+      transform:rotate(45deg);
+      opacity:0.8;
+      animation:fall 6s linear infinite;
     }
-
-    /* heart shape using pseudo-element-like technique (use rotated squares + circles via box-shadow) */
-    .heart::before, .heart::after{
+    .heart:before,.heart:after{
       content:"";
       position:absolute;
-      width:50%;
-      height:50%;
-      background:var(--accent);
+      width:18px;
+      height:18px;
+      background:#ff9aa2;
       border-radius:50%;
-      top:0;
-      left:50%;
-      transform:translateX(-50%);
     }
-    .heart::after{
-      left:0;
-      transform:translateX(0);
-    }
-    .heart > .core{
-      position:absolute;
-      width:100%;
-      height:100%;
-      transform:rotate(45deg);
-      background:var(--accent);
-      border-radius:2px;
-      top:0;
-      left:0;
-    }
+    .heart:before{ top:-9px; left:0; }
+    .heart:after{ left:-9px; top:0; }
 
-    /* fall animation moves heart from top to bottom with fade */
-    @keyframes fall {
-      0%   { transform: translateY(-10vh) scale(0.8); opacity:0; }
-      8%   { opacity:1; }
-      60%  { transform: translateY(62vh) scale(1.02); opacity:0.95; }
-      100% { transform: translateY(110vh) scale(0.5); opacity:0; }
-    }
-
-    /* little horizontal wobble */
-    @keyframes wobble{
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-8px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-4px); }
-      100% { transform: translateX(0); }
-    }
-
-    /* make sure everything stays pretty on small screens */
-    @media (max-width:480px){
-      :root{ --note-size: 20px; }
-      .note.left{ left: 22%; top: 42%; }
-      .note.right{ left: 70%; top: 42%; }
-      .mini-heart{ display:none; } /* reduce clutter */
+    @keyframes fall{
+      0%{ transform:translateY(-10vh) rotate(45deg); opacity:0; }
+      10%{ opacity:1; }
+      100%{ transform:translateY(110vh) rotate(45deg); opacity:0; }
     }
   </style>
 </head>
 <body>
-  <div class="card" aria-live="polite">
-    <h1>I LOVE U MELLO
-      <!-- small inline svg heart for style -->
-      <svg class="heart-inline" viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="#ff9aa2" d="M12 21s-7-4.4-9.1-7.1C-1 9.7 4 4 7.6 6.2 9.1 7.2 10 9 12 10.5c2-1.5 3-3.3 4.4-4.3C20 4 25 9.7 21.1 13.9 19 16.6 12 21 12 21z"></path>
-      </svg>
-    </h1>
+  <div class="container">
+    <h1>I LOVE U MELLO</h1>
+    <img src="couple.png" alt="Couple" />
 
-    <div class="stage" id="stage">
-      <!-- Ganti src menjadi "/mnt/data/couple.png" jika file ada di path yang diberikan lingkungan -->
-      <img src="couple.png" alt="Couple illustration" id="coupleImage" />
+    <!-- Not-not keluar dari mulut kiri -->
+    <div class="note left">♪</div>
+    <div class="note left">♫</div>
+    <div class="note left">♬</div>
 
-      <!-- musical notes (3 for each side) -->
-      <div class="note left" aria-hidden="true">
-        <span class="symbol">♪</span>
-        <span class="symbol">♫</span>
-        <span class="symbol">♬</span>
-      </div>
-      <div class="note right" aria-hidden="true">
-        <span class="symbol">♪</span>
-        <span class="symbol">♬</span>
-        <span class="symbol">♫</span>
-      </div>
-
-      <!-- two little pop hearts near heads -->
-      <svg class="mini-heart left" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 21s-7-4.4-9.1-7.1C-1 9.7 4 4 7.6 6.2 9.1 7.2 10 9 12 10.5c2-1.5 3-3.3 4.4-4.3C20 4 25 9.7 21.1 13.9 19 16.6 12 21 12 21z" fill="#ffc6d0"/>
-      </svg>
-
-      <svg class="mini-heart right" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 21s-7-4.4-9.1-7.1C-1 9.7 4 4 7.6 6.2 9.1 7.2 10 9 12 10.5c2-1.5 3-3.3 4.4-4.3C20 4 25 9.7 21.1 13.9 19 16.6 12 21 12 21z" fill="#ffdede"/>
-      </svg>
-
-      <!-- hearts that fall (created by JS) -->
-      <div class="hearts" id="heartsContainer" aria-hidden="true"></div>
-    </div>
-
-    <p style="margin:10px 0 0; color:#8a6b82; font-size:14px;">
-      Cute, soft, and romantic — simpel & cozy.
-    </p>
+    <!-- Not-not keluar dari mulut kanan -->
+    <div class="note right">♪</div>
+    <div class="note right">♫</div>
+    <div class="note right">♬</div>
   </div>
 
   <script>
-    /* Small script to add subtle falling hearts and keep the animation gentle.
-       Adjust HEART_COUNT to change density (keep low to avoid 'ramai'). */
-    (function(){
-      const CONTAINER = document.getElementById('heartsContainer');
-      const HEART_COUNT = 9; // keep small for subtle effect
-      const colors = ['#ffdede','#ffc6d0','#ffb3b8','#ffecf0'];
-
-      function rand(min, max){ return Math.random()*(max-min)+min; }
-      function createHeart(i){
-        const el = document.createElement('div');
-        el.className = 'heart';
-        el.style.left = (rand(6,94)) + '%';
-        // size variation
-        const size = rand(12,28);
-        el.style.width = size + 'px';
-        el.style.height = size + 'px';
-        // random color from palette
-        const c = colors[Math.floor(rand(0, colors.length))];
-        el.style.setProperty('--accent', c);
-
-        // set animation duration and delay so hearts are staggered and slow
-        const duration = rand(4500, 8000); // ms
-        const delay = rand(-2000, 4000); // negative delay helps immediate in-view
-        el.style.animationDuration = (duration/1000) + 's, 2.8s';
-        el.style.animationDelay = (delay/1000) + 's, 0s';
-
-        // build heart interior
-        const core = document.createElement('div');
-        core.className = 'core';
-        el.appendChild(core);
-
-        // remove after animation finishes to avoid DOM bloat
-        setTimeout(()=> {
-          if(el.parentNode) el.parentNode.removeChild(el);
-        }, duration + Math.abs(delay) + 600);
-
-        CONTAINER.appendChild(el);
-      }
-
-      // spawn hearts over time (gentle)
-      for(let i=0;i<HEART_COUNT;i++){
-        setTimeout(()=> createHeart(i), i*420 + Math.random()*1000);
-      }
-
-      // also periodically add a couple more so page feels alive but not busy
-      setInterval(()=>{
-        createHeart();
-        // occasionally one more
-        if(Math.random() > .6) setTimeout(createHeart, 350);
-      }, 3200);
-
-      // Optional: reposition notes based on image size (in case different crop)
-      // This attempts to fine-tune mouth positions for different image widths.
-      function placeNotes(){
-        const img = document.getElementById('coupleImage');
-        const leftNote = document.querySelector('.note.left');
-        const rightNote = document.querySelector('.note.right');
-
-        // approximate mouth positions by percentage of image width (tweak as needed)
-        // These are gentle heuristics and should work for the provided art.
-        const imgRect = img.getBoundingClientRect();
-        const stageRect = document.getElementById('stage').getBoundingClientRect();
-
-        // compute relative percentages if we have exact positioning logic
-        // Keep current defaults — only update if image aspect ratio is large (fallback).
-        // (Left as a safe, non-breaking enhancement.)
-        // If you want to fine-tune: change the numbers below.
-        leftNote.style.left = '24%';
-        leftNote.style.top  = '40%';
-        rightNote.style.left = '66%';
-        rightNote.style.top  = '40%';
-      }
-
-      window.addEventListener('load', placeNotes);
-      window.addEventListener('resize', placeNotes);
-    })();
+    // Buat love jatuh secara acak
+    const colors = ["#ff9aa2","#ffb3c1","#ffc6d0","#ffdede"];
+    function createHeart(){
+      const heart=document.createElement("div");
+      heart.className="heart";
+      heart.style.left=Math.random()*100+"vw";
+      heart.style.background=colors[Math.floor(Math.random()*colors.length)];
+      heart.style.animationDuration=(4+Math.random()*3)+"s";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),7000);
+    }
+    setInterval(createHeart,800); // tidak terlalu ramai
   </script>
 </body>
 </html>
