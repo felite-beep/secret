@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>I LOVE U MELLO</title>
   <style>
     body{
@@ -32,40 +32,47 @@
       0%,100%{transform:scale(1);}
       50%{transform:scale(1.05);}
     }
-    img{
-      width:320px;
-      height:auto;
-      display:block;
+
+    /* image wrapper so we can position mouths relative to image */
+    .image-wrap{
+      position:relative;
+      width:320px; /* keep same as your original image width */
       margin:0 auto;
     }
+    .image-wrap img{
+      display:block;
+      width:100%;
+      height:auto;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
 
-      span {
+    span {
       color: #525252;
       font-size: 16px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     }
-
     @media only screen and (max-width: 767px) {
       span {font-size: 14px;}
+      .image-wrap{ width:260px; } /* scale down on small screens */
     }
-    .handwriting {
-      font-family: 'Dancing Script', cursive;
-    }
-    /* Not-not musik */
+
+    .handwriting { font-family: 'Dancing Script', cursive; }
+
+    /* Not-not musik (kept from your original) */
     .note{
       position:absolute;
       font-size:22px;
       opacity:0;
       animation:floatNote 3s ease-in-out infinite;
       z-index:3;
+      pointer-events:none;
     }
     .note.left{ left:32%; top:52%; color:#9B4AB0; }
     .note.right{ left:63%; top:52%; color:#C439C1; }
-
     .note:nth-child(1){ animation-delay:0s; }
     .note:nth-child(2){ animation-delay:.8s; }
     .note:nth-child(3){ animation-delay:1.6s; }
-
     @keyframes floatNote{
       0%{ transform:translateY(0) scale(0.9); opacity:0; }
       10%{ opacity:1; }
@@ -74,7 +81,7 @@
       100%{ transform:translateY(-120px) scale(0.7) rotate(-20deg); opacity:0; }
     }
 
-    /* Hati jatuh */
+    /* Hati jatuh (kept) */
     .heart{
       position:absolute;
       width:18px;
@@ -96,34 +103,114 @@
     }
     .heart:before{ top:-9px; left:0; }
     .heart:after{ left:-9px; top:0; }
-
     @keyframes fall{
       0%   { top:-20px; opacity:0; }
       10%  { opacity:1; }
       100% { top:110%; opacity:0; }
     }
+
+    /* ---------- Singing mouths ---------- */
+    .mouth{
+      position:absolute;
+      width:40px;
+      height:18px;
+      left:50%;
+      top:50%;
+      transform-origin:center top;
+      border-radius:50% / 60%;
+      background:#3b1f27; /* mouth interior color */
+      box-shadow: inset 0 -6px 0 rgba(255,150,170,0.08);
+      z-index:4;
+      /* idle subtle "breath" open/close */
+      animation:idleSing 1200ms ease-in-out infinite;
+    }
+    .mouth .tongue{
+      position:absolute;
+      left:50%;
+      bottom:3px;
+      transform:translateX(-50%) scaleY(0);
+      width:70%;
+      height:40%;
+      border-radius:50%;
+      background:#ff9aa2;
+      opacity:0;
+      transition:opacity 120ms, transform 120ms;
+      z-index:5;
+    }
+    /* bigger open for singing bursts */
+    .mouth.sing{
+      animation:singBurst 360ms linear forwards;
+    }
+    .mouth.sing .tongue{
+      transform:translateX(-50%) scaleY(1);
+      opacity:1;
+    }
+
+    /* idle breathing */
+    @keyframes idleSing{
+      0%{ transform:scaleY(0.85); }
+      50%{ transform:scaleY(1.0); }
+      100%{ transform:scaleY(0.85); }
+    }
+    /* quick open-close burst when singing */
+    @keyframes singBurst{
+      0%{ transform:scaleY(0.9); }
+      30%{ transform:scaleY(1.6); }
+      60%{ transform:scaleY(1.0); }
+      100%{ transform:scaleY(0.95); }
+    }
+
+    /* left & right mouth positions - tweak these percentages to fit your image */
+    .mouth.left{
+      left:22%;  /* percentage of .image-wrap */
+      top:62%;
+      width:44px;
+      height:20px;
+    }
+    .mouth.right{
+      left:66%;
+      top:62%;
+      width:44px;
+      height:20px;
+    }
+
+    /* smaller on small screens */
+    @media only screen and (max-width: 420px){
+      .mouth{ width:36px; height:16px; }
+      .mouth.left{ left:20%; top:63%; }
+      .mouth.right{ left:66%; top:63%; }
+    }
+
   </style>
+
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <h1 class="handwriting">I Love You, Mello</h1>
     <span>You’re the <i>mello</i>-dy that I never get tired of hearing.</span>
-    <img src="couple.png" alt="Couple" />
+
+    <!-- image + mouth overlays -->
+    <div class="image-wrap" id="photoWrap">
+      <img src="couple.png" alt="Couple" draggable="false" />
+      <!-- mouths (positioned with percentages above) -->
+      <div class="mouth left" id="mouthLeft"><div class="tongue"></div></div>
+      <div class="mouth right" id="mouthRight"><div class="tongue"></div></div>
+    </div>
 
     <!-- Not-not keluar dari mulut kiri -->
-    <div class="note left">♪</div>
-    <div class="note left">♫</div>
-    <div class="note left">♬</div>
+    <div class="note left" data-side="left">♪</div>
+    <div class="note left" data-side="left">♫</div>
+    <div class="note left" data-side="left">♬</div>
 
     <!-- Not-not keluar dari mulut kanan -->
-    <div class="note right">♪</div>
-    <div class="note right">♫</div>
-    <div class="note right">♬</div>
+    <div class="note right" data-side="right">♪</div>
+    <div class="note right" data-side="right">♫</div>
+    <div class="note right" data-side="right">♬</div>
   </div>
 
   <script>
-    // Buat love jatuh secara acak
+    // Hearts (kept your original)
     const colors = ["#ff9aa2","#ffb3c1","#ffc6d0","#ffdede"];
     function createHeart(){
       const heart=document.createElement("div");
@@ -135,7 +222,74 @@
       document.body.appendChild(heart);
       setTimeout(()=>heart.remove(),duration*1000);
     }
-    setInterval(createHeart,900); // tidak terlalu ramai
+    setInterval(createHeart,900);
+
+    // Singing mouth interaction
+    const mouthLeft = document.getElementById('mouthLeft');
+    const mouthRight = document.getElementById('mouthRight');
+    const leftNotes = document.querySelectorAll('.note.left');
+    const rightNotes = document.querySelectorAll('.note.right');
+
+    // helper: quickly add 'sing' class then remove
+    function triggerSing(mouth, length=420){
+      if(!mouth) return;
+      // reset to allow retriggering quickly
+      mouth.classList.remove('sing');
+      // force reflow
+      void mouth.offsetWidth;
+      mouth.classList.add('sing');
+      // remove after given ms so idle resumes
+      setTimeout(()=> mouth.classList.remove('sing'), length);
+    }
+
+    // When a note animation iteration occurs, trigger corresponding mouth
+    leftNotes.forEach(n => {
+      n.addEventListener('animationiteration', () => {
+        // randomize short length to feel natural
+        triggerSing(mouthLeft, 300 + Math.random()*180);
+      });
+      // also when enters viewport first time (animationstart)
+      n.addEventListener('animationstart', () => {
+        triggerSing(mouthLeft, 300 + Math.random()*180);
+      });
+    });
+
+    rightNotes.forEach(n => {
+      n.addEventListener('animationiteration', () => {
+        triggerSing(mouthRight, 300 + Math.random()*180);
+      });
+      n.addEventListener('animationstart', () => {
+        triggerSing(mouthRight, 300 + Math.random()*180);
+      });
+    });
+
+    // Optional: a gentle random sing so they don't stay perfectly in sync forever
+    setInterval(()=>{
+      // small chance to hiccup a sing for realism
+      if(Math.random() < 0.18) triggerSing(mouthLeft, 220 + Math.random()*240);
+      if(Math.random() < 0.18) triggerSing(mouthRight, 220 + Math.random()*240);
+    }, 900);
+
+    // If your image has different dimensions, you can compute mouth offsets dynamically.
+    // Below is a helper that (optional) recalculates mouth positions from pixel offsets.
+    // Uncomment and adapt if you prefer to place mouths precisely with pixel numbers.
+
+    /*
+    function setMouthPosition(mouthEl, pxLeft, pxTop){
+      const wrap = document.getElementById('photoWrap');
+      const w = wrap.clientWidth;
+      const h = wrap.clientHeight;
+      mouthEl.style.left = (pxLeft / w * 100) + '%';
+      mouthEl.style.top  = (pxTop  / h * 100) + '%';
+    }
+    // Example usage after image loads:
+    const img = document.querySelector('.image-wrap img');
+    img.addEventListener('load', ()=>{
+      // setMouthPosition(mouthLeft, 70, 160); // pixel coords relative to image natural layout
+      // setMouthPosition(mouthRight, 200, 160);
+    });
+    */
+
   </script>
 </body>
 </html>
