@@ -1,207 +1,324 @@
 <!doctype html>
 <html lang="id">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>I LOVE U MELLO</title>
-<style>
-  :root{
-    --bg-start: #fff7f8;
-    --bg-end:   #ffe9f0;
-    --accent:   #ff4da6;
-    --soft-text: #ffffff;
-  }
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:linear-gradient(180deg,var(--bg-start),var(--bg-end)); color:#222}
-  .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;box-sizing:border-box}
-  /* Title */
-  .title{
-    position:fixed; top:24px; left:50%; transform:translateX(-50%);
-    font-size:clamp(22px,5.5vw,44px); font-weight:900;
-    background:linear-gradient(90deg,#ffb0d0,#ff5f9f); -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-transform:uppercase; letter-spacing:1px; z-index:60; pointer-events:none;
-    text-shadow:0 10px 30px rgba(255,80,150,0.12);
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>I LOVE U MELLO — Cute Animation</title>
+  <style>
+    :root{
+      --bg1: #fff7fb;
+      --bg2: #fffefb;
+      --accent: #ff9aa2;
+      --soft-1: #ffdede;
+      --soft-2: #ffe9f0;
+      --note-size: 26px;
+      --max-width: 720px;
+    }
 
-  /* card stage */
-  .stage{
-    width:min(980px,96vw); max-width:1100px;
-    background:rgba(255,255,255,0.96);
-    border-radius:20px; box-shadow:0 24px 80px rgba(0,0,0,0.12);
-    padding:22px; position:relative; overflow:hidden;
-    display:flex; flex-direction:column; align-items:center; gap:16px;
-  }
+    /* Page */
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at 10% 10%, #fff6f8 0%, transparent 20%),
+                  linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color:#4b3b4f;
+      -webkit-font-smoothing:antialiased;
+      padding:32px;
+    }
 
-  /* spotlight under image */
-  .spot{ position:absolute; left:50%; bottom:8%; transform:translateX(-50%); width:760px; height:220px; border-radius:50%;
-    background:radial-gradient(circle at 50% 30%, rgba(255,235,245,0.95), rgba(255,205,230,0.6) 45%, transparent 70%);
-    filter:blur(28px); z-index:2; pointer-events:none; }
+    /* Card */
+    .card{
+      width: min(96vw, var(--max-width));
+      text-align:center;
+      border-radius:20px;
+      padding:28px;
+      box-shadow: 0 8px 30px rgba(72,48,70,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,250,252,0.95));
+      position:relative;
+      overflow:visible;
+    }
 
-  /* hearts falling background (subtle) */
-  .hearts-bg{ position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
-  .hearts-bg i{ position:absolute; font-style:normal; color:#ff9fbf; opacity:0.95; font-size:18px; animation:heartFall linear infinite; filter:drop-shadow(0 8px 14px rgba(0,0,0,0.06)); }
-  @keyframes heartFall{
-    0%{ transform:translateY(-10vh) scale(.6) rotate(-6deg); opacity:0; }
-    8%{ opacity:1; }
-    100%{ transform:translateY(110vh) scale(1.05) rotate(8deg); opacity:0; }
-  }
+    h1{
+      margin:0 0 18px 0;
+      font-size: clamp(24px, 4vw, 36px);
+      letter-spacing: 2px;
+      color:#6f3b5a;
+      font-weight:700;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+    }
 
-  /* main image area */
-  .img-wrap{ position:relative; z-index:10; width:88%; max-width:860px; display:flex; justify-content:center; align-items:center; padding:18px; box-sizing:border-box; }
-  .img-wrap img{ width:100%; height:auto; display:block; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,0.08); }
+    h1 .heart-inline{
+      display:inline-block;
+      width:18px;
+      height:18px;
+      margin-left:8px;
+      transform: translateY(-2px);
+    }
 
-  /* visual mic (between joined hands) */
-  .mic-vis{ position:absolute; left:50%; transform:translateX(-50%); bottom:44%; z-index:30; pointer-events:none; display:flex; align-items:center; justify-content:center; }
-  .mic-vis .head{ width:44px; height:44px; border-radius:999px; background:linear-gradient(180deg,#333,#111); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:18px; box-shadow:0 10px 22px rgba(0,0,0,0.18);}
-  .mic-vis .stick{ width:8px; height:94px; background:linear-gradient(#222,#444); border-radius:6px; position:absolute; bottom:0; }
+    /* Image container */
+    .stage{
+      position:relative;
+      display:inline-block;
+      max-width:100%;
+      margin:6px auto 8px;
+    }
+    .stage img{
+      display:block;
+      width: min(560px, 82vw);
+      height:auto;
+      filter: drop-shadow(0 6px 18px rgba(102,70,90,0.06));
+      border-radius:12px;
+    }
 
-  /* musical notes (created by JS) */
-  .note{ position:fixed; z-index:90; pointer-events:none; font-size:28px; filter:drop-shadow(0 10px 16px rgba(0,0,0,0.12)); will-change:transform,opacity,left,top; }
+    /* Musical notes (from mouths) */
+    .note{
+      position:absolute;
+      font-size: var(--note-size);
+      opacity:0;
+      pointer-events:none;
+      transform-origin:center;
+      user-select:none;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.06));
+    }
 
-  /* small control hint (hidden on mobile) */
-  .hint{ position:fixed; right:18px; bottom:18px; font-size:13px; color:#666; z-index:80; background:rgba(255,255,255,0.6); padding:8px 10px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
-  @media(max-width:640px){ .hint{ display:none } }
+    /* left child's mouth approx position - tweak if needed */
+    .note.left { left: 24%; top: 40%; color:#ffb3b8; }
+    .note.right { left: 66%; top: 40%; color:#ffc6d0; }
 
-  /* reduce motion */
-  @media (prefers-reduced-motion: reduce){
-    .hearts-bg i{ animation:none; opacity:0.7; transform:none; }
-  }
-</style>
+    /* Each individual animated note */
+    .note .symbol{
+      display:inline-block;
+      transform: translateY(0) scale(0.9) rotate(0deg);
+      animation: sing 2.4s ease-in-out infinite;
+    }
+    .note .symbol:nth-child(2){ animation-delay: .28s; }
+    .note .symbol:nth-child(3){ animation-delay: .6s; }
+
+    @keyframes sing {
+      0% { transform: translateY(0) scale(.85) rotate(-10deg); opacity:0; }
+      10% { opacity:1; transform: translateY(-2px) scale(1) rotate(0deg); }
+      40% { transform: translateY(-28px) scale(1.02) rotate(6deg); opacity:0.9; }
+      80% { transform: translateY(-56px) scale(0.8) rotate(-14deg); opacity:0.5; }
+      100% { transform: translateY(-80px) scale(0.6) rotate(-30deg); opacity:0; }
+    }
+
+    /* little pulsing hearts next to kids */
+    .mini-heart{
+      position:absolute;
+      width:14px;
+      height:14px;
+      transform-origin:center;
+      opacity:0.95;
+      animation: pop 1.6s infinite ease-in-out;
+      pointer-events:none;
+    }
+    .mini-heart.left{ left: 12%; top: 14%; animation-delay:.1s; }
+    .mini-heart.right{ left: 86%; top: 16%; animation-delay:.25s; }
+    @keyframes pop{
+      0%{ transform:translateY(0) scale(.8); opacity:0; }
+      10%{ opacity:1; transform:translateY(-6px) scale(1.06); }
+      50%{ transform:translateY(-12px) scale(.9); opacity:0.9; }
+      100%{ transform:translateY(-22px) scale(.6); opacity:0; }
+    }
+
+    /* Falling hearts container — keep small number for "not too ramai" */
+    .hearts{
+      pointer-events:none;
+      position:absolute;
+      left:0; right:0; top:0; bottom:0;
+      overflow:visible;
+      z-index: -1; /* behind the card content */
+    }
+
+    .heart{
+      position:absolute;
+      width:18px;
+      height:18px;
+      transform:translateY(-20vh);
+      opacity:0;
+      will-change:transform, opacity;
+      animation-name: fall, wobble;
+      animation-timing-function: linear, ease-in-out;
+      animation-iteration-count: 1, infinite;
+    }
+
+    /* heart shape using pseudo-element-like technique (use rotated squares + circles via box-shadow) */
+    .heart::before, .heart::after{
+      content:"";
+      position:absolute;
+      width:50%;
+      height:50%;
+      background:var(--accent);
+      border-radius:50%;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+    }
+    .heart::after{
+      left:0;
+      transform:translateX(0);
+    }
+    .heart > .core{
+      position:absolute;
+      width:100%;
+      height:100%;
+      transform:rotate(45deg);
+      background:var(--accent);
+      border-radius:2px;
+      top:0;
+      left:0;
+    }
+
+    /* fall animation moves heart from top to bottom with fade */
+    @keyframes fall {
+      0%   { transform: translateY(-10vh) scale(0.8); opacity:0; }
+      8%   { opacity:1; }
+      60%  { transform: translateY(62vh) scale(1.02); opacity:0.95; }
+      100% { transform: translateY(110vh) scale(0.5); opacity:0; }
+    }
+
+    /* little horizontal wobble */
+    @keyframes wobble{
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* make sure everything stays pretty on small screens */
+    @media (max-width:480px){
+      :root{ --note-size: 20px; }
+      .note.left{ left: 22%; top: 42%; }
+      .note.right{ left: 70%; top: 42%; }
+      .mini-heart{ display:none; } /* reduce clutter */
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="title">💖 I LOVE U MELLO 💖</div>
+  <div class="card" aria-live="polite">
+    <h1>I LOVE U MELLO
+      <!-- small inline svg heart for style -->
+      <svg class="heart-inline" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#ff9aa2" d="M12 21s-7-4.4-9.1-7.1C-1 9.7 4 4 7.6 6.2 9.1 7.2 10 9 12 10.5c2-1.5 3-3.3 4.4-4.3C20 4 25 9.7 21.1 13.9 19 16.6 12 21 12 21z"></path>
+      </svg>
+    </h1>
 
-    <div class="stage" role="main" aria-label="I LOVE U MELLO — cute duet">
-      <div class="hearts-bg" aria-hidden="true"></div>
-      <div class="spot" aria-hidden="true"></div>
+    <div class="stage" id="stage">
+      <!-- Ganti src menjadi "/mnt/data/couple.png" jika file ada di path yang diberikan lingkungan -->
+      <img src="couple.png" alt="Couple illustration" id="coupleImage" />
 
-      <div class="img-wrap" id="imgWrap">
-        <!-- PENTING: letakkan file gambar yang kamu attach dengan nama 'couple.png' di folder yang sama -->
-        <img id="coupleImg" src="couple.png" alt="Couple holding hands singing">
+      <!-- musical notes (3 for each side) -->
+      <div class="note left" aria-hidden="true">
+        <span class="symbol">♪</span>
+        <span class="symbol">♫</span>
+        <span class="symbol">♬</span>
+      </div>
+      <div class="note right" aria-hidden="true">
+        <span class="symbol">♪</span>
+        <span class="symbol">♬</span>
+        <span class="symbol">♫</span>
       </div>
 
-      <div class="mic-vis" aria-hidden="true">
-        <div class="head">♪</div>
-        <div class="stick"></div>
-      </div>
+      <!-- two little pop hearts near heads -->
+      <svg class="mini-heart left" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 21s-7-4.4-9.1-7.1C-1 9.7 4 4 7.6 6.2 9.1 7.2 10 9 12 10.5c2-1.5 3-3.3 4.4-4.3C20 4 25 9.7 21.1 13.9 19 16.6 12 21 12 21z" fill="#ffc6d0"/>
+      </svg>
 
+      <svg class="mini-heart right" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 21s-7-4.4-9.1-7.1C-1 9.7 4 4 7.6 6.2 9.1 7.2 10 9 12 10.5c2-1.5 3-3.3 4.4-4.3C20 4 25 9.7 21.1 13.9 19 16.6 12 21 12 21z" fill="#ffdede"/>
+      </svg>
+
+      <!-- hearts that fall (created by JS) -->
+      <div class="hearts" id="heartsContainer" aria-hidden="true"></div>
     </div>
 
-    <div class="hint">Jika posisi not meleset, ubah <code>leftMouthPercent</code> & <code>rightMouthPercent</code> di script.</div>
+    <p style="margin:10px 0 0; color:#8a6b82; font-size:14px;">
+      Cute, soft, and romantic — simpel & cozy.
+    </p>
   </div>
 
-<script>
-/* SETTINGS: sesuaikan jika perlu */
-const leftMouthPercent  = { x: 0.375, y: 0.485 }; // proporsi relatif pada gambar (0..1)
-const rightMouthPercent = { x: 0.625, y: 0.485 };
-const HEART_COUNT = 12;    // jumlah love falling (tidak ramai)
-const HEART_MIN_SIZE = 14;
-const HEART_MAX_SIZE = 28;
+  <script>
+    /* Small script to add subtle falling hearts and keep the animation gentle.
+       Adjust HEART_COUNT to change density (keep low to avoid 'ramai'). */
+    (function(){
+      const CONTAINER = document.getElementById('heartsContainer');
+      const HEART_COUNT = 9; // keep small for subtle effect
+      const colors = ['#ffdede','#ffc6d0','#ffb3b8','#ffecf0'];
 
-/* Reduced motion support */
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function rand(min, max){ return Math.random()*(max-min)+min; }
+      function createHeart(i){
+        const el = document.createElement('div');
+        el.className = 'heart';
+        el.style.left = (rand(6,94)) + '%';
+        // size variation
+        const size = rand(12,28);
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+        // random color from palette
+        const c = colors[Math.floor(rand(0, colors.length))];
+        el.style.setProperty('--accent', c);
 
-/* create subtle falling hearts */
-(function spawnHearts(){
-  const container = document.querySelector('.hearts-bg');
-  for(let i=0;i<HEART_COUNT;i++){
-    const el = document.createElement('i');
-    el.innerText = '❤';
-    // random left across wide area but bias toward center
-    const left = 8 + Math.random()*84;
-    el.style.left = left + 'vw';
-    el.style.fontSize = (HEART_MIN_SIZE + Math.random()*(HEART_MAX_SIZE-HEART_MIN_SIZE)) + 'px';
-    // random speed and delay (longer durations so it's not busy)
-    el.style.animationDuration = (9 + Math.random()*8) + 's';
-    el.style.bottom = (-40 - Math.random()*20) + 'vh';
-    el.style.opacity = 0.9 - Math.random()*0.3;
-    // slight horizontal drift using transform in CSS isn't necessary here; JS-free
-    container.appendChild(el);
-    if(prefersReduced) el.style.animation = 'none';
-  }
-})();
+        // set animation duration and delay so hearts are staggered and slow
+        const duration = rand(4500, 8000); // ms
+        const delay = rand(-2000, 4000); // negative delay helps immediate in-view
+        el.style.animationDuration = (duration/1000) + 's, 2.8s';
+        el.style.animationDelay = (delay/1000) + 's, 0s';
 
-/* ---------- NOTES ANIMATION ---------- */
-// spawn note at page coords px,py
-function spawnNoteAt(px, py){
-  if(prefersReduced) return;
-  const n = document.createElement('div');
-  n.className = 'note';
-  n.innerText = Math.random() > 0.5 ? '🎵' : '🎶';
-  // start position
-  n.style.left = px + 'px';
-  n.style.top  = py + 'px';
-  n.style.opacity = '1';
-  document.body.appendChild(n);
+        // build heart interior
+        const core = document.createElement('div');
+        core.className = 'core';
+        el.appendChild(core);
 
-  const duration = 2400 + Math.random()*1200;
-  const start = performance.now();
-  const startX = px;
-  const drift = (Math.random()*80 - 40);
+        // remove after animation finishes to avoid DOM bloat
+        setTimeout(()=> {
+          if(el.parentNode) el.parentNode.removeChild(el);
+        }, duration + Math.abs(delay) + 600);
 
-  function frame(now){
-    const t = (now - start) / duration;
-    if(t >= 1){ n.remove(); return; }
-    // vertical rise
-    const currentY = py - (t * 240);
-    // subtle wobble horizontal
-    const currentX = startX + Math.sin(t * Math.PI * 2) * 14 + drift * t * 0.22;
-    const scale = 1 + t * 0.36;
-    n.style.left = currentX + 'px';
-    n.style.top  = currentY + 'px';
-    n.style.transform = `scale(${scale}) rotate(${t*28}deg)`;
-    n.style.opacity = String(1 - t*1.05);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
+        CONTAINER.appendChild(el);
+      }
 
-// compute page coordinates of each mouth using image bounding box
-function mouthPageCoords(){
-  const img = document.getElementById('coupleImg');
-  const rect = img.getBoundingClientRect();
-  const leftX  = rect.left + rect.width  * leftMouthPercent.x;
-  const leftY  = rect.top  + rect.height * leftMouthPercent.y;
-  const rightX = rect.left + rect.width  * rightMouthPercent.x;
-  const rightY = rect.top  + rect.height * rightMouthPercent.y;
-  return { leftX, leftY, rightX, rightY };
-}
+      // spawn hearts over time (gentle)
+      for(let i=0;i<HEART_COUNT;i++){
+        setTimeout(()=> createHeart(i), i*420 + Math.random()*1000);
+      }
 
-// alternate duet timing
-let turn = 0;
-function duetTick(){
-  const c = mouthPageCoords();
-  if(turn % 2 === 0){
-    spawnNoteAt(c.leftX,  c.leftY);
-    setTimeout(()=> spawnNoteAt(c.rightX, c.rightY), 320);
-  } else {
-    spawnNoteAt(c.rightX, c.rightY);
-    setTimeout(()=> spawnNoteAt(c.leftX,  c.leftY), 320);
-  }
-  turn++;
-}
+      // also periodically add a couple more so page feels alive but not busy
+      setInterval(()=>{
+        createHeart();
+        // occasionally one more
+        if(Math.random() > .6) setTimeout(createHeart, 350);
+      }, 3200);
 
-// start the notes after image has loaded and layout stabilized
-const img = document.getElementById('coupleImg');
-function startNotes(){
-  if(prefersReduced) return;
-  duetTick(); // initial
-  window._noteInterval = setInterval(duetTick, 900);
-}
-if(img.complete){
-  // small delay so bounding box stable
-  setTimeout(startNotes, 300);
-} else {
-  img.addEventListener('load', ()=> setTimeout(startNotes, 300));
-  img.addEventListener('error', ()=> console.warn('Gagal memuat couple.png — pastikan file ada dan nama tepat.'));
-}
+      // Optional: reposition notes based on image size (in case different crop)
+      // This attempts to fine-tune mouth positions for different image widths.
+      function placeNotes(){
+        const img = document.getElementById('coupleImage');
+        const leftNote = document.querySelector('.note.left');
+        const rightNote = document.querySelector('.note.right');
 
-// on resize/scroll the coords are computed on the fly so notes remain aligned
+        // approximate mouth positions by percentage of image width (tweak as needed)
+        // These are gentle heuristics and should work for the provided art.
+        const imgRect = img.getBoundingClientRect();
+        const stageRect = document.getElementById('stage').getBoundingClientRect();
 
-// Accessibility: if user prefers reduced motion, clear interval
-if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-  if(window._noteInterval) clearInterval(window._noteInterval);
-}
-</script>
+        // compute relative percentages if we have exact positioning logic
+        // Keep current defaults — only update if image aspect ratio is large (fallback).
+        // (Left as a safe, non-breaking enhancement.)
+        // If you want to fine-tune: change the numbers below.
+        leftNote.style.left = '24%';
+        leftNote.style.top  = '40%';
+        rightNote.style.left = '66%';
+        rightNote.style.top  = '40%';
+      }
+
+      window.addEventListener('load', placeNotes);
+      window.addEventListener('resize', placeNotes);
+    })();
+  </script>
 </body>
 </html>
