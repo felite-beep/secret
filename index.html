@@ -1,123 +1,330 @@
-<!DOCTYPE html>
+# Creating a detailed animated duet HTML file and saving it to /mnt/data/index.html
+html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>I LOVE U MELLO</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      background: radial-gradient(circle at top, #ffdee9, #ff9a9e);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      overflow: hidden;
-      position: relative;
-    }
-    h1 {
-      font-size: 3em;
-      color: #fff;
-      text-shadow: 0 0 10px #ff4da6, 0 0 20px #ff80bf;
-      margin-bottom: 30px;
-      z-index: 3;
-      animation: glow 2s infinite alternate;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #ff4da6, 0 0 10px #ff80bf; }
-      to   { text-shadow: 0 0 20px #ff1a8c, 0 0 40px #ff66b2; }
-    }
-    .stage {
-      display: flex;
-      align-items: flex-end;
-      gap: 80px;
-      z-index: 2;
-    }
-    .singer {
-      width: 150px;
-      animation: sway 2s infinite ease-in-out alternate;
-    }
-    @keyframes sway {
-      from { transform: rotate(-3deg) translateY(0); }
-      to   { transform: rotate(3deg) translateY(-5px); }
-    }
-    .mic {
-      font-size: 3em;
-      animation: bounce 1s infinite alternate;
-    }
-    @keyframes bounce {
-      from { transform: translateY(0); }
-      to   { transform: translateY(-10px); }
-    }
-    .note {
-      position: absolute;
-      font-size: 1.5em;
-      animation: flyNote 4s linear infinite;
-      opacity: 0;
-    }
-    @keyframes flyNote {
-      0%   { transform: translateY(0) scale(0.5); opacity: 0; }
-      20%  { opacity: 1; }
-      100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
-    }
-    .hearts {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0; left: 0;
-      z-index: 1;
-      overflow: hidden;
-    }
-    .heart {
-      position: absolute;
-      color: rgba(255,255,255,0.7);
-      font-size: 24px;
-      animation: float 8s infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>I LOVE U MELLO — Duet</title>
+<style>
+  :root{
+    --bg1:#ffd2e6;
+    --bg2:#ff9ab8;
+    --accent:#ff4da6;
+    --soft:#ffffffcc;
+  }
+  html,body{height:100%;margin:0;font-family:Inter, "Helvetica Neue", Arial, sans-serif;background:radial-gradient(circle at 10% 10%,var(--bg1), var(--bg2));overflow:hidden}
+  .stage{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:18px;
+    position:relative;
+    padding:20px;
+    box-sizing:border-box;
+  }
+
+  h1{
+    margin:0;
+    font-size:clamp(28px,6vw,56px);
+    color:var(--soft);
+    letter-spacing:1px;
+    text-align:center;
+    text-transform:uppercase;
+    font-weight:700;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.25));
+    animation: glow 2s infinite alternate;
+  }
+  @keyframes glow{
+    from { text-shadow:0 0 8px #ff9ab8,0 0 18px #ff4da6; transform:translateY(0); }
+    to   { text-shadow:0 0 22px #ff66b2,0 0 36px #ff1a8c; transform:translateY(-2px); }
+  }
+
+  /* Stage area where characters stand */
+  .floor{
+    width:min(980px,95vw);
+    height:55vh;
+    max-height:520px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:60px;
+    position:relative;
+    z-index:3;
+    pointer-events:none;
+  }
+
+  /* central microphone */
+  .mic{
+    position:absolute;
+    bottom:24%;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+    pointer-events:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:90px;
+    height:220px;
+    filter:drop-shadow(0 8px 18px rgba(0,0,0,0.25));
+    animation: micBounce 1s infinite alternate ease-in-out;
+  }
+  @keyframes micBounce{
+    from{transform:translateX(-50%) translateY(0)}
+    to{transform:translateX(-50%) translateY(-6px)}
+  }
+  .mic .stand{width:10px;height:120px;background:linear-gradient(#444,#222);border-radius:6px 6px 0 0;position:absolute;bottom:0}
+  .mic .head{width:56px;height:56px;border-radius:999px;background:linear-gradient(180deg,#333,#111);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;box-shadow:0 6px 12px rgba(0,0,0,0.4)}
+
+  /* characters */
+  .character{
+    width:220px;
+    height:400px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    position:relative;
+    transform-origin:center bottom;
+    animation:sway 2.4s ease-in-out infinite;
+  }
+  .character.woman{animation-delay:0.12s}
+  .character.man{animation-delay:-0.08s}
+  @keyframes sway{
+    0%{ transform:translateY(0) rotate(-2deg) }
+    50%{ transform:translateY(-6px) rotate(2deg) }
+    100%{ transform:translateY(0) rotate(-2deg) }
+  }
+
+  /* SVG is responsive */
+  svg{width:100%;height:auto;display:block;}
+
+  /* mouth animation via scaling */
+  .mouth{transform-origin:center top;animation:mouth 1s steps(2) infinite}
+  .mouth.man{animation-duration:1.1s}
+  .mouth.woman{animation-duration:0.95s;animation-delay:0.1s}
+
+  @keyframes mouth{
+    0%{ transform:scaleY(0.28) }
+    40%{ transform:scaleY(0.28) }
+    60%{ transform:scaleY(1) }
+    100%{ transform:scaleY(0.28) }
+  }
+
+  /* eyes blink */
+  .eye{animation:blink 4s step-end infinite}
+  .eye.right{animation-delay:0.15s}
+  @keyframes blink{
+    0%,95%{ transform:scaleY(1) }
+    96%,100%{ transform:scaleY(0.08) }
+  }
+
+  /* musical notes rising */
+  .note{
+    position:absolute;
+    bottom:46%;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:26px;
+    pointer-events:none;
+    z-index:6;
+    opacity:0;
+    filter:drop-shadow(0 6px 8px rgba(0,0,0,0.18));
+  }
+
+  /* hearts background */
+  .hearts{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .hearts i{position:absolute;font-style:normal;opacity:0.9;font-size:22px;animation:heartFloat linear infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,0.12))}
+  @keyframes heartFloat{
+    0%{ transform:translateY(120vh) scale(0.6) rotate(-10deg); opacity:0 }
+    10%{ opacity:1 }
+    100%{ transform:translateY(-40vh) scale(1.1) rotate(20deg); opacity:0 }
+  }
+
+  /* subtle stage glow */
+  .glow{
+    position:absolute;
+    width:900px;height:280px;border-radius:999px;left:50%;transform:translateX(-50%);bottom:12%;filter:blur(40px);z-index:2;background:radial-gradient(circle at 50% 50%, #ffe6f1, #ffc7de 40%, transparent 60% );
+    pointer-events:none;
+  }
+
+  /* responsive tweaks */
+  @media(max-width:600px){
+    .floor{gap:28px;height:56vh}
+    .mic{width:70px;height:170px}
+    .character{width:150px;height:320px}
+  }
+
+</style>
 </head>
 <body>
+<div class="stage" role="main" aria-label="A romantic duet animation showing I LOVE U MELLO">
   <h1>💖 I LOVE U MELLO 💖</h1>
-  
-  <div class="stage">
-    <!-- pasangan pakai ilustrasi SVG sederhana -->
-    <img src="https://cdn-icons-png.flaticon.com/512/3565/3565418.png" class="singer" alt="Boy">
-    <div class="mic">🎤</div>
-    <img src="https://cdn-icons-png.flaticon.com/512/3565/3565415.png" class="singer" alt="Girl">
-  </div>
 
-  <div class="hearts"></div>
+  <div class="floor" aria-hidden="true">
+    <!-- Man SVG -->
+    <div class="character man" aria-hidden="true">
+      <svg viewBox="0 0 200 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+        <!-- body -->
+        <g transform="translate(0,0)">
+          <ellipse cx="100" cy="300" rx="70" ry="20" fill="#ffd9ec" opacity="0.25"/>
+          <rect x="52" y="160" rx="16" ry="16" width="96" height="120" fill="#6aa6ff"/>
+          <rect x="62" y="190" rx="8" ry="8" width="76" height="80" fill="#2f79ff"/>
+          <!-- arms -->
+          <g transform="translate(0,0)">
+            <rect x="22" y="180" rx="12" ry="12" width="28" height="16" fill="#ffd9ec" transform="rotate(-12 36 188)"/>
+            <rect x="150" y="180" rx="12" ry="12" width="28" height="16" fill="#ffd9ec" transform="rotate(12 164 188)"/>
+          </g>
+          <!-- legs -->
+          <rect x="68" y="270" rx="10" ry="10" width="24" height="48" fill="#254a9a"/>
+          <rect x="108" y="270" rx="10" ry="10" width="24" height="48" fill="#254a9a"/>
+          <!-- head -->
+          <g transform="translate(40,42)">
+            <circle cx="60" cy="60" r="48" fill="#ffd9ec" stroke="#f5c7d9" stroke-width="1"/>
+            <!-- hair -->
+            <path d="M24 54 Q60 14 96 54 Q86 38 60 34 Q44 36 24 54 Z" fill="#2a2a2a"/>
+            <!-- eyes -->
+            <g transform="translate(34,58)">
+              <ellipse class="eye" cx="8" cy="8" rx="6" ry="5" fill="#111"/>
+              <ellipse class="eye right" cx="34" cy="8" rx="6" ry="5" fill="#111"/>
+            </g>
+            <!-- blush -->
+            <ellipse cx="36" cy="84" rx="8" ry="5" fill="#ff9bb7" opacity="0.9"/>
+            <ellipse cx="84" cy="84" rx="6" ry="4" fill="#ff9bb7" opacity="0.9"/>
+            <!-- mouth group animated (scaleY) -->
+            <g transform="translate(24,88)">
+              <rect class="mouth man" x="14" y="0" rx="8" ry="8" width="32" height="10" fill="#741b34" />
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
 
-  <script>
-    // generate floating hearts
-    const hearts = document.querySelector('.hearts');
-    for(let i=0; i<30; i++){
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random()*100 + 'vw';
-      heart.style.fontSize = (Math.random()*20+10) + 'px';
-      heart.style.animationDuration = (Math.random()*5+5) + 's';
-      heart.innerText = '❤️';
-      hearts.appendChild(heart);
-    }
+    <!-- microphone -->
+    <div class="mic" aria-hidden="true">
+      <div class="head">♫</div>
+      <div class="stand"></div>
+    </div>
 
-    // generate floating notes dari mic
-    setInterval(() => {
-      const note = document.createElement('div');
-      note.className = 'note';
-      note.innerText = Math.random() > 0.5 ? '🎵' : '🎶';
-      note.style.left = '50%';
-      note.style.bottom = '150px';
-      note.style.animationDuration = (Math.random()*2+3)+'s';
-      document.body.appendChild(note);
-      setTimeout(() => note.remove(), 4000);
-    }, 800);
-  </script>
+    <!-- Woman SVG -->
+    <div class="character woman" aria-hidden="true">
+      <svg viewBox="0 0 200 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+        <!-- body -->
+        <g transform="translate(0,0)">
+          <ellipse cx="100" cy="300" rx="70" ry="20" fill="#ffd9ec" opacity="0.25"/>
+          <rect x="48" y="160" rx="20" ry="20" width="104" height="130" fill="#ff8fb0"/>
+          <rect x="62" y="190" rx="10" ry="10" width="76" height="70" fill="#ff5fa0"/>
+          <!-- arms -->
+          <rect x="18" y="190" rx="12" ry="12" width="30" height="16" fill="#ffd9ec" transform="rotate(10 30 198)"/>
+          <rect x="150" y="190" rx="12" ry="12" width="30" height="16" fill="#ffd9ec" transform="rotate(-10 162 198)"/>
+          <!-- legs -->
+          <rect x="68" y="280" rx="10" ry="10" width="24" height="40" fill="#d83b7b"/>
+          <rect x="108" y="280" rx="10" ry="10" width="24" height="40" fill="#d83b7b"/>
+          <!-- head -->
+          <g transform="translate(40,38)">
+            <circle cx="60" cy="60" r="48" fill="#ffd9ec" stroke="#f6cfe0" stroke-width="1"/>
+            <!-- hair long -->
+            <path d="M16 46 Q30 6 60 20 Q96 6 118 54 Q104 84 86 96 Q56 108 26 96 Q12 86 16 46 Z" fill="#6f2f2f"/>
+            <!-- eyes -->
+            <g transform="translate(36,58)">
+              <ellipse class="eye" cx="8" cy="8" rx="6" ry="5" fill="#111"/>
+              <ellipse class="eye right" cx="34" cy="8" rx="6" ry="5" fill="#111"/>
+            </g>
+            <!-- blush -->
+            <ellipse cx="36" cy="84" rx="10" ry="6" fill="#ff9bb7" opacity="0.95"/>
+            <ellipse cx="84" cy="84" rx="10" ry="6" fill="#ff9bb7" opacity="0.95"/>
+            <!-- mouth -->
+            <g transform="translate(24,88)">
+              <rect class="mouth woman" x="14" y="0" rx="8" ry="8" width="32" height="10" fill="#6f142e"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+  </div> <!-- end floor -->
+
+  <div class="glow" aria-hidden="true"></div>
+  <div class="hearts" aria-hidden="true"></div>
+
+  <!-- musical notes (DOM created for better timing control) -->
+  <div id="notesArea" aria-hidden="true"></div>
+
+</div>
+
+<script>
+// generate hearts in background
+const hearts = document.querySelector('.hearts');
+const colors = ['#fff2f7','#ffe6f1','#ffd9ec'];
+for(let i=0;i<28;i++){
+  const a = document.createElement('i');
+  a.innerText = '❤';
+  a.style.left = Math.random()*100 + 'vw';
+  a.style.bottom = -20 - (Math.random()*40) + 'vh';
+  a.style.fontSize = (12 + Math.random()*28) + 'px';
+  a.style.animationDuration = (8 + Math.random()*8) + 's';
+  a.style.opacity = 0.9 - Math.random()*0.4;
+  hearts.appendChild(a);
+}
+
+// notes logic: alternate notes from man and woman
+const notesArea = document.getElementById('notesArea');
+let tick = 0;
+function spawnNote(from='center', side='left'){
+  const n = document.createElement('div');
+  n.className = 'note';
+  n.style.left = (side === 'left') ? '38%' : (side === 'right' ? '62%' : '50%');
+  n.style.bottom = '45%';
+  n.style.fontSize = (18 + Math.random()*20) + 'px';
+  n.style.opacity = 0;
+  n.innerText = (Math.random()>0.5) ? '🎵' : '🎶';
+  document.body.appendChild(n);
+
+  // animate with JS for more organic path
+  const duration = 2800 + Math.random()*1200;
+  const start = performance.now();
+  const startX = parseFloat(n.style.left);
+  const drift = (Math.random()*18 - 9);
+  function frame(now){
+    const t = (now - start) / duration;
+    if(t>=1){ n.style.opacity = 0; n.remove(); return; }
+    // ease upward
+    n.style.bottom = (45 + t*55) + '%';
+    n.style.left = `calc(${startX}% + ${Math.sin(t*3.14*2)*10 + drift}px)`;
+    n.style.transform = `scale(${1 + t*0.4}) rotate(${t*40}deg)`;
+    n.style.opacity = String(1 - t*1.1);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+// alternate spawn to simulate duet
+setInterval(()=>{
+  spawnNote('mouth','left');
+  setTimeout(()=> spawnNote('mouth','right'), 380);
+  // occasional double harmony
+  if(Math.random() > 0.7){
+    setTimeout(()=> spawnNote('mouth','left'), 720);
+  }
+}, 1000);
+
+// Accessibility: reduce motion if user prefers
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(prefersReduced){
+  document.querySelectorAll('.character,.note,.hearts i,h1,.mic').forEach(el=> {
+    el.style.animation = 'none';
+  });
+}
+</script>
 </body>
 </html>
+"""
+
+# save to file
+path = "/mnt/data/index.html"
+with open(path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+path
+
