@@ -1,288 +1,246 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="id">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>I LOVE U MELLO — Romantic Duet (Holding Hands)</title>
+<title>I LOVE U MELLO — Duet Cute</title>
 <style>
   :root{
-    --bg1:#fff0f6;
-    --bg2:#ffd2e6;
-    --accent:#ff4da6;
-    --soft:#ffffffee;
+    --bg-a: #fff6fb;
+    --bg-b: #ffd9e9;
+    --text: #ffffff;
+    --accent: #ff2f86;
   }
-  html,body{height:100%;margin:0;font-family:Inter, "Helvetica Neue", Arial, sans-serif;background:radial-gradient(circle at 15% 10%,var(--bg1), var(--bg2));overflow:hidden;color:#222}
+  html,body{height:100%;margin:0;font-family:Inter, "Helvetica Neue", Arial, sans-serif;background:linear-gradient(180deg,var(--bg-a),var(--bg-b));overflow:hidden;color:#222}
+  .wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;box-sizing:border-box}
+  h1{
+    margin:0 0 6px 0;
+    font-weight:800;
+    color:var(--text);
+    background:linear-gradient(90deg,#ffdff0,#ffb2da);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-size:clamp(28px,6.5vw,56px);
+    text-align:center;
+    text-transform:uppercase;
+    filter:drop-shadow(0 8px 20px rgba(255,50,140,0.12));
+  }
+
   .stage{
-    height:100vh;
+    width:min(920px,95vw);
+    max-width:1100px;
+    height:min(72vh,760px);
+    background:rgba(255,255,255,0.85);
+    border-radius:28px;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.12);
+    position:relative;
+    overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
-    gap:18px;
-    position:relative;
     padding:20px;
-    box-sizing:border-box;
   }
 
-  h1{
-    margin:0;
-    font-size:clamp(30px,6vw,64px);
-    color:var(--soft);
-    letter-spacing:1px;
-    text-align:center;
-    text-transform:uppercase;
-    font-weight:800;
-    filter:drop-shadow(0 8px 22px rgba(0,0,0,0.18));
-    animation: glow 2.2s infinite alternate;
-    z-index:6;
-    padding:6px 14px;
-    border-radius:14px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-    backdrop-filter: blur(2px);
-  }
-  @keyframes glow{
-    from { text-shadow:0 0 10px #ffc0dd,0 0 18px #ff7fb5; transform:translateY(0); }
-    to   { text-shadow:0 0 26px #ff6aa3,0 0 46px #ff2f86; transform:translateY(-3px); }
-  }
-
-  .floor{
-    width:min(1100px,96vw);
-    height:62vh;
-    max-height:600px;
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-    gap:40px;
-    position:relative;
-    z-index:4;
-    pointer-events:none;
-  }
-
-  .spot{ position:absolute; left:50%; transform:translateX(-50%); bottom:12%; width:880px; height:260px; background:radial-gradient(ellipse at center, rgba(255,230,245,0.9) 0%, rgba(255,200,230,0.6) 40%, transparent 70%); filter: blur(36px); z-index:2; }
-
-  .duet{ display:flex; gap:34px; align-items:flex-end; position:relative; z-index:5; }
-
-  .character{
-    width:300px;
-    max-width:34vw;
-    height:460px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    position:relative;
-    transform-origin:center bottom;
-    animation:sway 2.8s ease-in-out infinite;
-  }
-  .character.man{animation-delay:-0.08s}
-  .character.woman{animation-delay:0.12s}
-  @keyframes sway{
-    0%{ transform: translateY(0) rotate(-1.5deg) }
-    50%{ transform: translateY(-8px) rotate(1.5deg) }
-    100%{ transform: translateY(0) rotate(-1.5deg) }
-  }
-
-  svg{width:100%;height:auto;display:block;overflow:visible}
-
-  .arm-man, .arm-woman{ transform-origin: center; transition: transform 0.3s linear; }
-  .hold{ animation:holdSway 2.4s ease-in-out infinite; transform-origin: center center; }
-  @keyframes holdSway{
-    0%{ transform: translateY(0) rotate(-3deg) }
-    50%{ transform: translateY(-4px) rotate(3deg) }
-    100%{ transform: translateY(0) rotate(-3deg) }
-  }
-
-  .mouth{ transform-origin:center top; animation:mouth 1s steps(2) infinite; }
-  .mouth.man{ animation-duration:1.05s }
-  .mouth.woman{ animation-duration:0.92s; animation-delay:0.08s }
-  @keyframes mouth{
-    0%{ transform: scaleY(0.28) }
-    40%{ transform: scaleY(0.28) }
-    60%{ transform: scaleY(1) }
-    100%{ transform: scaleY(0.28) }
-  }
-
-  .eye{ animation:blink 4s step-end infinite }
-  .eye.right{ animation-delay:0.18s }
-  @keyframes blink{ 0%,95%{ transform:scaleY(1) } 96%,100%{ transform:scaleY(0.08) } }
-
-  .note{ position:absolute; bottom:48%; font-size:22px; pointer-events:none; z-index:8; opacity:0; filter:drop-shadow(0 6px 8px rgba(0,0,0,0.12)); }
-
-  .hearts{ position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden }
-  .hearts i{ position:absolute; font-style:normal; opacity:0.95; font-size:20px; animation:heartFloat linear infinite; filter:drop-shadow(0 6px 8px rgba(0,0,0,0.08)); }
-  @keyframes heartFloat{
-    0%{ transform:translateY(110vh) scale(0.6) rotate(-8deg); opacity:0 }
+  /* hearts floating */
+  .hearts{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+  .hearts i{position:absolute;font-style:normal;opacity:.95;font-size:20px;animation:heartUp linear infinite;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.06))}
+  @keyframes heartUp{
+    0%{ transform:translateY(110vh) scale(.6) rotate(-10deg); opacity:0 }
     8%{ opacity:1 }
-    100%{ transform:translateY(-50vh) scale(1.05) rotate(10deg); opacity:0 }
+    100%{ transform:translateY(-40vh) scale(1.05) rotate(12deg); opacity:0 }
   }
 
-  .hand-join{ mix-blend-mode:overlay }
-  .mic{ position:absolute; bottom:38%; left:50%; transform:translateX(-50%); z-index:6; pointer-events:none; display:flex; align-items:center; justify-content:center; width:72px; height:180px; }
-  .mic .head{ width:56px; height:56px; border-radius:999px; background:linear-gradient(180deg,#3a3a3a,#111); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:20px; box-shadow:0 8px 18px rgba(0,0,0,0.2) }
-  .mic .stand{ width:10px; height:110px; background:linear-gradient(#444,#222); border-radius:6px 6px 0 0; position:absolute; bottom:0 }
+  /* center scene */
+  .scene{position:relative;z-index:3;display:flex;align-items:flex-end;gap:36px;justify-content:center;width:100%;height:100%}
+  .spot{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);width:780px;height:260px;border-radius:50%;background:radial-gradient(circle at 50% 30%, rgba(255,230,245,0.95), rgba(255,200,230,0.6) 40%, transparent 70%);filter:blur(24px);z-index:2}
 
+  /* characters */
+  .character{width:320px;max-width:36vw;height:420px;display:block;transform-origin:center bottom;animation:sway 2.6s ease-in-out infinite}
+  .character.alt{animation-delay:0.12s}
+  @keyframes sway{0%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-6px) rotate(1.2deg)}100%{transform:translateY(0) rotate(-1deg)}}
+
+  /* mouth & blink */
+  .mouth{transform-origin:center top;animation:mouth 1s steps(2) infinite}
+  .mouth.alt{animation-duration:0.95s;animation-delay:0.08s}
+  @keyframes mouth{0%{transform:scaleY(.28)}40%{transform:scaleY(.28)}60%{transform:scaleY(1)}100%{transform:scaleY(.28)}}
+  .eye{animation:blink 4.2s step-end infinite}
+  .eye.r{animation-delay:.2s}
+  @keyframes blink{0%,95%{transform:scaleY(1)}96%,100%{transform:scaleY(.06)}}
+
+  /* joined hands highlight */
+  .hand-glow{position:absolute;left:50%;bottom:51%;transform:translateX(-50%);width:140px;height:80px;border-radius:40px;background:radial-gradient(circle,#ffdff0, rgba(255,160,190,0.4));filter:blur(12px);opacity:.95;z-index:2;pointer-events:none}
+
+  /* mic */
+  .mic{position:absolute;left:50%;bottom:45%;transform:translateX(-50%);z-index:4;pointer-events:none;display:flex;align-items:center;justify-content:center}
+  .mic .head{width:46px;height:46px;border-radius:999px;background:linear-gradient(180deg,#333,#111);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;box-shadow:0 10px 22px rgba(0,0,0,.18)}
+  .mic .stick{width:8px;height:100px;background:linear-gradient(#222,#444);border-radius:6px;position:absolute;bottom:0}
+
+  /* notes */
+  .note{position:absolute;bottom:48%;font-size:26px;z-index:5;pointer-events:none;filter:drop-shadow(0 8px 12px rgba(0,0,0,0.12))}
+
+  /* responsiveness */
   @media(max-width:720px){
-    .character{ width:180px; height:380px }
-    .floor{ height:52vh }
-    h1{ font-size: clamp(22px,7vw,40px) }
+    .character{width:200px;height:320px}
+    .spot{width:520px;height:180px}
+    h1{font-size:clamp(20px,9vw,34px)}
   }
 </style>
 </head>
 <body>
-<div class="stage" role="main" aria-label="Romantic duet showing couple holding hands while singing">
+<div class="wrap" role="main">
   <h1>💖 I LOVE U MELLO 💖</h1>
 
-  <div class="floor">
+  <div class="stage" aria-label="Cute duet scene">
+    <div class="hearts" aria-hidden="true"></div>
+
     <div class="spot" aria-hidden="true"></div>
 
-    <div class="duet" aria-hidden="true">
-      <!-- Man character (SVG) -->
+    <div class="scene" aria-hidden="true">
+      <!-- Man (toddler style) -->
       <div class="character man" aria-hidden="true">
-        <svg viewBox="0 0 240 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-          <ellipse cx="120" cy="500" rx="92" ry="18" fill="#ffd9ec" opacity="0.16"/>
-          <g transform="translate(40,80)">
-            <rect x="30" y="190" rx="18" ry="18" width="120" height="160" fill="#6aa6ff" />
-            <rect x="48" y="220" rx="8" ry="8" width="84" height="86" fill="#2f79ff" />
-            <rect x="54" y="338" rx="10" ry="10" width="26" height="72" fill="#274c9a" />
-            <rect x="108" y="338" rx="10" ry="10" width="26" height="72" fill="#274c9a" />
+        <svg viewBox="0 0 240 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+          <!-- shadow -->
+          <ellipse cx="120" cy="460" rx="86" ry="16" fill="#ffd9ec" opacity="0.15"/>
+          <g transform="translate(0,30)">
+            <!-- body -->
+            <rect x="48" y="174" rx="18" ry="18" width="144" height="150" fill="#7fb8ff" />
+            <rect x="68" y="196" rx="10" ry="10" width="104" height="92" fill="#4d8ff0" />
+            <!-- legs -->
+            <rect x="78" y="314" rx="10" ry="10" width="26" height="66" fill="#274c9a"/>
+            <rect x="136" y="314" rx="10" ry="10" width="26" height="66" fill="#274c9a"/>
+            <!-- head -->
             <g transform="translate(0,0)">
-              <circle cx="90" cy="90" r="58" fill="#ffd9ec" stroke="#f5c7d9" stroke-width="1"/>
-              <path d="M42 86 Q90 26 138 86 Q126 68 90 64 Q70 66 42 86 Z" fill="#221f1f"/>
-              <g transform="translate(56,76)">
-                <ellipse class="eye" cx="8" cy="8" rx="6" ry="5" fill="#111" />
-                <ellipse class="eye right" cx="34" cy="8" rx="6" ry="5" fill="#111" />
-                <ellipse cx="18" cy="33" rx="8" ry="5" fill="#ff9bb7" opacity="0.95"/>
-                <ellipse cx="38" cy="33" rx="6" ry="4" fill="#ff9bb7" opacity="0.95"/>
+              <circle cx="120" cy="100" r="58" fill="#ffdfe9" stroke="#f5d0dd" stroke-width="1"/>
+              <path d="M80 92 Q120 36 160 92 Q150 70 120 66 Q98 68 80 92 Z" fill="#3a2c2b"/>
+              <!-- eyes -->
+              <g transform="translate(92,92)">
+                <ellipse class="eye" cx="10" cy="10" rx="6" ry="5" fill="#111"/>
+                <ellipse class="eye r" cx="36" cy="10" rx="6" ry="5" fill="#111"/>
+                <!-- blush -->
+                <ellipse cx="6" cy="34" rx="8" ry="6" fill="#ff9bb7" opacity="0.95"/>
+                <ellipse cx="46" cy="34" rx="8" ry="6" fill="#ff9bb7" opacity="0.95"/>
               </g>
-              <g transform="translate(60,120)">
-                <rect class="mouth man" x="0" y="0" rx="8" ry="8" width="34" height="10" fill="#6b122c" />
+              <!-- mouth -->
+              <g transform="translate(106,140)">
+                <rect class="mouth" x="-8" y="0" rx="6" ry="6" width="34" height="10" fill="#6e1530"/>
               </g>
             </g>
 
-            <!-- left arm reaching to join hands -->
-            <g class="arm-man hold" transform="translate(-6,218) rotate(-10)">
-              <rect x="0" y="0" width="18" height="16" rx="10" ry="10" fill="#ffd9ec" transform="rotate(-6 9 8)"/>
-              <rect x="8" y="-6" width="92" height="14" rx="10" ry="10" fill="#6aa6ff" transform="rotate(6 54 1)"/>
-              <circle cx="106" cy="1" r="10" fill="#ffd9ec" class="hand-join"/>
-            </g>
-            <!-- right arm (resting) -->
-            <g transform="translate(150,240) rotate(6)">
-              <rect x="0" y="0" width="18" height="16" rx="10" ry="10" fill="#ffd9ec" transform="rotate(12 9 8)"/>
-              <rect x="-76" y="-6" width="80" height="14" rx="10" ry="10" fill="#6aa6ff" transform="rotate(-12 -38 1)"/>
+            <!-- left arm reaching to center (hand will overlap with woman's) -->
+            <g class="arm-man hold" transform="translate(12,222) rotate(-8)">
+              <rect x="0" y="0" width="18" height="18" rx="10" ry="10" fill="#ffdfe9"/>
+              <rect x="8" y="-6" width="110" height="18" rx="10" ry="10" fill="#7fb8ff"/>
+              <circle cx="124" cy="3" r="11" fill="#ffdfe9" class="hand-join"/>
             </g>
           </g>
         </svg>
       </div>
 
-      <!-- microphone between them -->
+      <!-- mic (between hands) -->
       <div class="mic" aria-hidden="true">
         <div class="head">♪</div>
-        <div class="stand"></div>
+        <div class="stick"></div>
       </div>
 
-      <!-- Woman character (SVG) -->
-      <div class="character woman" aria-hidden="true">
-        <svg viewBox="0 0 240 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-          <ellipse cx="120" cy="500" rx="92" ry="18" fill="#ffd9ec" opacity="0.12"/>
-          <g transform="translate(40,80)">
-            <rect x="28" y="180" rx="18" ry="18" width="128" height="180" fill="#ff8fb0" />
-            <rect x="52" y="220" rx="10" ry="10" width="72" height="86" fill="#ff5fa0" />
-            <rect x="58" y="350" rx="10" ry="10" width="26" height="60" fill="#d83b7b" />
-            <rect x="112" y="350" rx="10" ry="10" width="26" height="60" fill="#d83b7b" />
+      <!-- Woman (toddler style) -->
+      <div class="character woman alt" aria-hidden="true">
+        <svg viewBox="0 0 240 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+          <ellipse cx="120" cy="460" rx="86" ry="16" fill="#ffd9ec" opacity="0.12"/>
+          <g transform="translate(0,30)">
+            <rect x="40" y="170" rx="18" ry="18" width="160" height="160" fill="#ffb0c9" />
+            <rect x="66" y="198" rx="10" ry="10" width="108" height="88" fill="#ff7aa6" />
+            <!-- legs -->
+            <rect x="80" y="330" rx="10" ry="10" width="26" height="58" fill="#d83b7b"/>
+            <rect x="134" y="330" rx="10" ry="10" width="26" height="58" fill="#d83b7b"/>
+            <!-- head -->
             <g transform="translate(0,0)">
-              <circle cx="90" cy="86" r="58" fill="#ffd9ec" stroke="#f6cfe0" stroke-width="1"/>
-              <path d="M30 60 Q56 12 92 26 Q128 12 156 60 Q146 86 126 102 Q94 118 56 102 Q30 86 30 60 Z" fill="#6f2f2f"/>
-              <g transform="translate(56,76)">
-                <ellipse class="eye" cx="8" cy="8" rx="6" ry="5" fill="#111" />
-                <ellipse class="eye right" cx="34" cy="8" rx="6" ry="5" fill="#111" />
-                <ellipse cx="18" cy="33" rx="10" ry="6" fill="#ff9bb7" opacity="0.95"/>
-                <ellipse cx="38" cy="33" rx="10" ry="6" fill="#ff9bb7" opacity="0.95"/>
+              <circle cx="120" cy="94" r="58" fill="#ffdfe9" stroke="#f6dbe3" stroke-width="1"/>
+              <path d="M60 70 Q96 30 152 70 Q140 52 120 48 Q100 50 60 70 Z" fill="#6b3335"/>
+              <g transform="translate(92,92)">
+                <ellipse class="eye" cx="10" cy="10" rx="6" ry="5" fill="#111"/>
+                <ellipse class="eye r" cx="36" cy="10" rx="6" ry="5" fill="#111"/>
+                <ellipse cx="6" cy="34" rx="8" ry="6" fill="#ff9bb7" opacity="0.95"/>
+                <ellipse cx="46" cy="34" rx="8" ry="6" fill="#ff9bb7" opacity="0.95"/>
               </g>
-              <g transform="translate(60,120)">
-                <rect class="mouth woman" x="0" y="0" rx="8" ry="8" width="34" height="10" fill="#6f142e" />
+              <!-- mouth -->
+              <g transform="translate(106,138)">
+                <rect class="mouth alt" x="-8" y="0" rx="6" ry="6" width="34" height="10" fill="#6f142e"/>
               </g>
             </g>
 
-            <!-- right arm reaching to join hands -->
-            <g class="arm-woman hold" transform="translate(168,218) rotate(8)">
-              <rect x="-92" y="-6" width="92" height="14" rx="10" ry="10" fill="#ff8fb0" transform="rotate(-6 -46 1)"/>
-              <rect x="-10" y="0" width="18" height="16" rx="10" ry="10" fill="#ffd9ec" transform="rotate(6 9 8)"/>
-              <circle cx="-106" cy="1" r="10" fill="#ffd9ec" class="hand-join"/>
-            </g>
-
-            <!-- left arm resting -->
-            <g transform="translate(-10,240) rotate(-6)">
-              <rect x="0" y="0" width="18" height="16" rx="10" ry="10" fill="#ffd9ec" transform="rotate(-10 9 8)"/>
-              <rect x="8" y="-6" width="92" height="14" rx="10" ry="10" fill="#ff8fb0" transform="rotate(8 54 1)"/>
+            <!-- right arm reaching to center -->
+            <g class="arm-woman hold" transform="translate(150,220) rotate(8)">
+              <rect x="-124" y="-8" width="110" height="18" rx="10" ry="10" fill="#ffb0c9" transform="rotate(-6 -46 1)"/>
+              <rect x="-12" y="0" width="18" height="18" rx="10" ry="10" fill="#ffdfe9"/>
+              <circle cx="-136" cy="3" r="11" fill="#ffdfe9" class="hand-join"/>
             </g>
           </g>
         </svg>
       </div>
-    </div> <!-- duet -->
-  </div> <!-- floor -->
-
-  <div class="hearts" aria-hidden="true"></div>
-  <div id="notesArea" aria-hidden="true"></div>
+    </div> <!-- /scene -->
+  </div> <!-- /stage -->
 </div>
 
+<!-- NOTES & hearts script -->
 <script>
-// Create background hearts
+// generate floating hearts with random positions
 const hearts = document.querySelector('.hearts');
-for(let i=0;i<28;i++){
+for(let i=0;i<26;i++){
   const el = document.createElement('i');
   el.innerText = '❤';
   el.style.left = Math.random()*100 + 'vw';
-  el.style.bottom = -20 - (Math.random()*40) + 'vh';
   el.style.fontSize = (12 + Math.random()*28) + 'px';
-  el.style.animationDuration = (8 + Math.random()*8) + 's';
-  el.style.opacity = 0.9 - Math.random()*0.5;
+  el.style.animationDuration = (7 + Math.random()*7) + 's';
+  el.style.bottom = (-60 - Math.random()*40) + 'vh';
   hearts.appendChild(el);
 }
 
-// Notes rising from between their joined hands
+// spawn notes from the joined hands area (center)
 function spawnNote(side='center'){
   const n = document.createElement('div');
   n.className = 'note';
-  n.style.left = (side==='left' ? '40%' : (side==='right'? '60%' : '50%'));
+  n.innerText = Math.random()>.5 ? '🎵' : '🎶';
+  // start near center join
+  n.style.left = (side==='left'? '42%': (side==='right'? '58%':'50%'));
   n.style.bottom = '46%';
-  n.style.fontSize = (18 + Math.random()*22) + 'px';
-  n.innerText = (Math.random()>0.5) ? '🎵' : '🎶';
   document.body.appendChild(n);
 
-  const duration = 3000 + Math.random()*1200;
+  const dur = 2600 + Math.random()*1600;
   const start = performance.now();
   const startX = parseFloat(n.style.left);
-  const drift = (Math.random()*16 - 8);
+  const drift = (Math.random()*18 - 9);
   function frame(now){
-    const t = (now - start) / duration;
+    const t = (now - start)/dur;
     if(t>=1){ n.remove(); return; }
-    n.style.bottom = (46 + t*55) + '%';
+    n.style.bottom = (46 + t*58) + '%';
     n.style.left = `calc(${startX}% + ${Math.sin(t*3.14*2)*10 + drift}px)`;
-    n.style.transform = `scale(${1 + t*0.45}) rotate(${t*30}deg)`;
+    n.style.transform = `scale(${1 + t*0.4}) rotate(${t*30}deg)`;
     n.style.opacity = String(1 - t*1.05);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 }
 
-// alternate notes to simulate duet timing
-setInterval(()=>{
+// alternate spawn to simulate duet
+setInterval(()=> {
   spawnNote('left');
   setTimeout(()=> spawnNote('right'), 420);
-  if(Math.random()>0.75) setTimeout(()=> spawnNote('center'), 700);
+  if(Math.random()>.7) setTimeout(()=> spawnNote('center'), 700);
 }, 900);
 
-// Visual hand-join glow
+// small glow on joined hands
 const manHand = document.querySelector('.arm-man circle.hand-join');
 const womanHand = document.querySelector('.arm-woman circle.hand-join');
 if(manHand && womanHand){
-  manHand.style.filter = 'drop-shadow(0 6px 8px rgba(255,90,150,0.25))';
-  womanHand.style.filter = 'drop-shadow(0 6px 8px rgba(255,90,150,0.25))';
+  // approximate overlap color to create joined feeling
+  manHand.style.filter = 'drop-shadow(0 6px 12px rgba(255,100,160,0.28))';
+  womanHand.style.filter = 'drop-shadow(0 6px 12px rgba(255,100,160,0.28))';
 }
 
-// Respect reduced motion preference
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(prefersReduced){
-  document.querySelectorAll('.character,.note,.hearts i,h1,.mic,.arm-man,.arm-woman').forEach(el=> {
+// accessibility: respects reduced-motion
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.character,.note,.hearts i,h1,.mic,.arm-man,.arm-woman').forEach(el => {
     el.style.animation = 'none';
   });
 }
