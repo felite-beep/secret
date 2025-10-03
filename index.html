@@ -1,13 +1,10 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>I LOVE U MELLO</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{ --accent1:#9B4AB0; --accent2:#C439C1; }
-    html,body{height:100%}
     body{
       margin:0;
       display:flex;
@@ -17,135 +14,67 @@
       background:linear-gradient(180deg,#fff7fb,#fffefb);
       font-family:"Comic Sans MS",cursive,sans-serif;
       overflow:hidden;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
     }
     .container{
       text-align:center;
       position:relative;
       z-index:2;
-      width: min(420px, 92vw);
     }
     h1{
       color:#6f3b5a;
-      margin:8px 0 10px;
+      margin-bottom:15px;
       font-size:28px;
       letter-spacing:2px;
-      text-shadow:0 1px 2px rgba(0,0,0,0.08);
+      text-shadow:0 1px 2px rgba(0,0,0,0.1);
       animation:pulse 2s infinite ease-in-out;
-      font-family:'Dancing Script', cursive;
     }
-    @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
-    .subtitle{
-      color:#525252;
-      font-size:16px;
-      margin-bottom:12px;
+    @keyframes pulse{
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    img{
+      width:320px;
+      height:auto;
+      display:block;
+      margin:0 auto;
+    }
+
+      span {
+      color: #525252;
+      font-size: 16px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     }
-    @media (max-width:420px){ .subtitle{font-size:14px} }
 
-    /* image wrapper & mouths (smaller defaults) */
-    .image-wrap{
-      position:relative;
-      width:320px;
-      margin:0 auto;
-      touch-action:none;
+    @media only screen and (max-width: 767px) {
+      span {font-size: 14px;}
     }
-    @media (max-width:420px){ .image-wrap{ width:260px } }
-
-    .image-wrap img{
-      display:block;
-      width:100%;
-      height:auto;
-      user-select:none;
-      -webkit-user-drag:none;
-      border-radius:10px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.06);
+    .handwriting {
+      font-family: 'Dancing Script', cursive;
     }
-
-    /* <-- CHANGES: mouth smaller and subtler animation -->
-       width/height reduced; idle scaling amplitude reduced;
-       singBurst peak scale reduced to avoid "big" mouth */
-
-    .mouth{
-      position:absolute;
-      width:30px;      /* reduced from 44 */
-      height:14px;     /* reduced from 20 */
-      transform-origin:center top;
-      border-radius:50%/60%;
-      background:#3b1f27;
-      box-shadow: inset 0 -5px 0 rgba(255,150,170,0.06);
-      z-index:6;
-      cursor:grab;
-      touch-action:none;
-      transition:width .12s ease, height .12s ease;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      overflow:visible;
-      animation:idleSing 1400ms ease-in-out infinite;
-    }
-    .mouth:active{ cursor:grabbing; }
-
-    .mouth .tongue{
-      position:absolute;
-      left:50%;
-      bottom:3px;
-      transform:translateX(-50%) scaleY(0);
-      width:62%;
-      height:36%;
-      border-radius:50%;
-      background:#ff9aa2;
-      opacity:0;
-      transition:opacity 100ms, transform 100ms;
-      z-index:7;
-    }
-
-    .mouth.sing{ animation:singBurst 340ms linear forwards; }
-    .mouth.sing .tongue{ transform:translateX(-50%) scaleY(1); opacity:1; }
-
-    @keyframes idleSing{
-      0%{ transform:scaleY(0.94); }
-      50%{ transform:scaleY(1.00); }
-      100%{ transform:scaleY(0.94); }
-    }
-    @keyframes singBurst{
-      0%{ transform:scaleY(0.96); }
-      30%{ transform:scaleY(1.25); }   /* reduced peak (was ~1.6) */
-      60%{ transform:scaleY(1.02); }
-      100%{ transform:scaleY(0.98); }
-    }
-
-    @media (max-width:420px){ .mouth{ width:26px; height:12px } }
-
-    /* music notes */
+    /* Not-not musik */
     .note{
       position:absolute;
       font-size:22px;
       opacity:0;
       animation:floatNote 3s ease-in-out infinite;
-      z-index:5;
-      pointer-events:none;
-      user-select:none;
+      z-index:3;
     }
-    .note.left{ left:18%; top:56%; color:var(--accent1); }
-    .note.right{ left:64%; top:56%; color:var(--accent2); }
-    .note.left:nth-of-type(1){ animation-delay:0s; }
-    .note.left:nth-of-type(2){ animation-delay:.8s; }
-    .note.left:nth-of-type(3){ animation-delay:1.6s; }
-    .note.right:nth-of-type(4){ animation-delay:0s; }
-    .note.right:nth-of-type(5){ animation-delay:.8s; }
-    .note.right:nth-of-type(6){ animation-delay:1.6s; }
+    .note.left{ left:32%; top:52%; color:#9B4AB0; }
+    .note.right{ left:63%; top:52%; color:#C439C1; }
+
+    .note:nth-child(1){ animation-delay:0s; }
+    .note:nth-child(2){ animation-delay:.8s; }
+    .note:nth-child(3){ animation-delay:1.6s; }
 
     @keyframes floatNote{
       0%{ transform:translateY(0) scale(0.9); opacity:0; }
       10%{ opacity:1; }
-      40%{ transform:translateY(-40px) scale(1.05) rotate(8deg); opacity:1; }
-      70%{ transform:translateY(-80px) scale(0.9) rotate(-8deg); opacity:.6; }
-      100%{ transform:translateY(-120px) scale(0.7) rotate(-18deg); opacity:0; }
+      40%{ transform:translateY(-40px) scale(1.1) rotate(10deg); opacity:1; }
+      70%{ transform:translateY(-80px) scale(0.9) rotate(-10deg); opacity:.6; }
+      100%{ transform:translateY(-120px) scale(0.7) rotate(-20deg); opacity:0; }
     }
 
-    /* falling hearts */
+    /* Hati jatuh */
     .heart{
       position:absolute;
       width:18px;
@@ -156,7 +85,6 @@
       animation:fall linear forwards;
       top:-20px;
       z-index:1;
-      border-radius:2px;
     }
     .heart:before,.heart:after{
       content:"";
@@ -168,224 +96,46 @@
     }
     .heart:before{ top:-9px; left:0; }
     .heart:after{ left:-9px; top:0; }
-    @keyframes fall{
-      0%{ top:-20px; opacity:0; }
-      10%{ opacity:1; }
-      100%{ top:110%; opacity:0; }
-    }
 
-    /* controls */
-    .controls{ text-align:center; margin-top:12px; font-size:13px; }
-    .btn{
-      padding:8px 12px; border-radius:8px; border:none; background:var(--accent1); color:white;
-      cursor:pointer; margin:0 6px; font-weight:600;
-      box-shadow:0 6px 16px rgba(155,74,176,0.12);
-    }
-    .btn:active{ transform:translateY(1px) }
-    .coords{ margin-top:8px; color:#444; font-family:monospace; font-size:13px; }
-    .css-output{
-      font-family:monospace; background:#fff; padding:8px; border-radius:8px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.06); display:inline-block; margin-top:8px; white-space:pre-wrap;
+    @keyframes fall{
+      0%   { top:-20px; opacity:0; }
+      10%  { opacity:1; }
+      100% { top:110%; opacity:0; }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <h1>I Love You, Mello</h1>
-    <div class="subtitle">You’re the <i>mello</i>-dy that I never get tired of hearing.</div>
+    <h1 class="handwriting">I Love You, Mello</h1>
+    <span>You’re the <i>mello</i>-dy that I never get tired of hearing.</span>
+    <img src="couple.png" alt="Couple" />
 
-    <div class="image-wrap" id="photoWrap">
-      <img id="mainImg" src="couple.png" alt="Couple" draggable="false" />
-      <!-- posisi awal (persen) -->
-      <div class="mouth left" id="mouthLeft" style="left:22%; top:62%;">
-        <div class="tongue"></div>
-      </div>
-      <div class="mouth right" id="mouthRight" style="left:66%; top:62%;">
-        <div class="tongue"></div>
-      </div>
-    </div>
+    <!-- Not-not keluar dari mulut kiri -->
+    <div class="note left">♪</div>
+    <div class="note left">♫</div>
+    <div class="note left">♬</div>
 
-    <div class="note left" data-side="left">♪</div>
-    <div class="note left" data-side="left">♫</div>
-    <div class="note left" data-side="left">♬</div>
-
-    <div class="note right" data-side="right">♪</div>
-    <div class="note right" data-side="right">♫</div>
-    <div class="note right" data-side="right">♬</div>
-
-    <div class="controls">
-      <button class="btn" id="resetBtn">Reset posisi</button>
-      <button class="btn" id="copyBtn">Copy CSS</button>
-      <div class="coords" id="coords">Left: <span id="lLeft">22%</span> | Top: <span id="tLeft">62%</span> — Right: <span id="lRight">66%</span> | Top: <span id="tRight">62%</span></div>
-      <div id="cssOut" class="css-output" style="display:none; margin-top:10px;"></div>
-    </div>
+    <!-- Not-not keluar dari mulut kanan -->
+    <div class="note right">♪</div>
+    <div class="note right">♫</div>
+    <div class="note right">♬</div>
   </div>
 
   <script>
-    /* falling hearts */
-    (function(){
-      const colors = ["#ff9aa2","#ffb3c1","#ffc6d0","#ffdede"];
-      function createHeart(){
-        const heart=document.createElement("div");
-        heart.className="heart";
-        heart.style.left = Math.random()*100 + "vw";
-        heart.style.background = colors[Math.floor(Math.random()*colors.length)];
-        const duration = 4 + Math.random()*3;
-        heart.style.animationDuration = duration + "s";
-        document.body.appendChild(heart);
-        setTimeout(()=> heart.remove(), duration*1000);
-      }
-      setInterval(createHeart, 900);
-    })();
-
-    /* singing mouths + drag + copy css (kept logic but uses smaller mouth dims) */
-    (function(){
-      const wrap = document.getElementById('photoWrap');
-      const img = document.getElementById('mainImg');
-      const mouthLeft = document.getElementById('mouthLeft');
-      const mouthRight = document.getElementById('mouthRight');
-      const leftNotes = document.querySelectorAll('.note.left');
-      const rightNotes = document.querySelectorAll('.note.right');
-
-      function convertInitialPercents(){
-        const w = wrap.clientWidth, h = wrap.clientHeight;
-        [mouthLeft, mouthRight].forEach(m=>{
-          const cs = getComputedStyle(m);
-          if(cs.left.includes('%')) m.style.left = (parseFloat(cs.left)/100 * w) + 'px';
-          if(cs.top.includes('%'))  m.style.top  = (parseFloat(cs.top)/100 * h) + 'px';
-        });
-        updateDisplays();
-      }
-
-      const coords = {
-        lLeft: document.getElementById('lLeft'),
-        tLeft: document.getElementById('tLeft'),
-        lRight: document.getElementById('lRight'),
-        tRight: document.getElementById('tRight'),
-        cssOut: document.getElementById('cssOut'),
-        copyBtn: document.getElementById('copyBtn'),
-        resetBtn: document.getElementById('resetBtn')
-      };
-      function updateDisplays(){
-        const w = wrap.clientWidth, h = wrap.clientHeight;
-        function pct(el){ return (el.offsetLeft / w * 100).toFixed(2) + '%'; }
-        function pctTop(el){ return (el.offsetTop / h * 100).toFixed(02) + '%'; }
-        coords.lLeft.textContent = pct(mouthLeft);
-        coords.tLeft.textContent = pctTop(mouthLeft);
-        coords.lRight.textContent = pct(mouthRight);
-        coords.tRight.textContent = pctTop(mouthRight);
-      }
-
-      /* dragging */
-      let dragEl = null;
-      let offsetX = 0, offsetY = 0;
-
-      function onPointerDown(e){
-        dragEl = e.currentTarget;
-        const r = dragEl.getBoundingClientRect();
-        offsetX = e.clientX - r.left;
-        offsetY = e.clientY - r.top;
-        try{ dragEl.setPointerCapture(e.pointerId); }catch(e){}
-        dragEl.classList.add('dragging');
-      }
-      function onPointerMove(e){
-        if(!dragEl) return;
-        const wrapRect = wrap.getBoundingClientRect();
-        let x = e.clientX - wrapRect.left - offsetX;
-        let y = e.clientY - wrapRect.top - offsetY;
-        x = Math.max(0, Math.min(x, wrap.clientWidth - dragEl.offsetWidth));
-        y = Math.max(0, Math.min(y, wrap.clientHeight - dragEl.offsetHeight));
-        dragEl.style.left = x + 'px';
-        dragEl.style.top  = y + 'px';
-        updateDisplays();
-      }
-      function onPointerUp(e){
-        if(!dragEl) return;
-        try{ dragEl.releasePointerCapture(e.pointerId); }catch(e){}
-        dragEl.classList.remove('dragging');
-        dragEl = null;
-      }
-
-      [mouthLeft, mouthRight].forEach(m=>{
-        m.addEventListener('pointerdown', onPointerDown);
-        window.addEventListener('pointermove', onPointerMove);
-        window.addEventListener('pointerup', onPointerUp);
-        m.addEventListener('dragstart', e=> e.preventDefault());
-      });
-
-      coords.resetBtn.addEventListener('click', ()=>{
-        const w = wrap.clientWidth, h = wrap.clientHeight;
-        mouthLeft.style.left = (0.22 * w) + 'px';
-        mouthLeft.style.top  = (0.62 * h) + 'px';
-        mouthRight.style.left= (0.66 * w) + 'px';
-        mouthRight.style.top = (0.62 * h) + 'px';
-        updateDisplays();
-        coords.cssOut.style.display = 'none';
-      });
-
-      coords.copyBtn.addEventListener('click', async ()=>{
-        const w = wrap.clientWidth, h = wrap.clientHeight;
-        function makeCSS(el, cls){
-          const leftPct = (el.offsetLeft / w * 100).toFixed(2) + '%';
-          const topPct  = (el.offsetTop  / h * 100).toFixed(2) + '%';
-          return `.${cls} { left: ${leftPct}; top: ${topPct}; }`;
-        }
-        const cssText = makeCSS(mouthLeft, 'mouth.left') + '\n' + makeCSS(mouthRight, 'mouth.right');
-        coords.cssOut.textContent = cssText;
-        coords.cssOut.style.display = 'block';
-        try{
-          await navigator.clipboard.writeText(cssText);
-          coords.copyBtn.textContent = 'Copied!';
-          setTimeout(()=> coords.copyBtn.textContent = 'Copy CSS', 1200);
-        }catch(e){
-          coords.copyBtn.textContent = 'Copy failed';
-          setTimeout(()=> coords.copyBtn.textContent = 'Copy CSS', 1400);
-        }
-      });
-
-      function onReady(){
-        convertInitialPercents();
-      }
-      if(img.complete) onReady();
-      else img.addEventListener('load', onReady);
-      window.addEventListener('resize', ()=> {
-        const wOld = wrap.clientWidth || 320;
-        const hOld = wrap.clientHeight || 200;
-        const l1 = mouthLeft.offsetLeft / wOld;
-        const t1 = mouthLeft.offsetTop  / hOld;
-        const l2 = mouthRight.offsetLeft / wOld;
-        const t2 = mouthRight.offsetTop / hOld;
-        setTimeout(()=>{
-          mouthLeft.style.left = (l1 * wrap.clientWidth) + 'px';
-          mouthLeft.style.top  = (t1 * wrap.clientHeight) + 'px';
-          mouthRight.style.left= (l2 * wrap.clientWidth) + 'px';
-          mouthRight.style.top = (t2 * wrap.clientHeight) + 'px';
-          updateDisplays();
-        }, 60);
-      });
-
-      /* singing triggers */
-      function triggerSing(mouth, length=360){
-        if(!mouth) return;
-        mouth.classList.remove('sing');
-        void mouth.offsetWidth;
-        mouth.classList.add('sing');
-        setTimeout(()=> mouth.classList.remove('sing'), length);
-      }
-      leftNotes.forEach(n=>{
-        n.addEventListener('animationiteration', ()=> triggerSing(mouthLeft, 260 + Math.random()*160));
-        n.addEventListener('animationstart', ()=> triggerSing(mouthLeft, 260 + Math.random()*160));
-      });
-      rightNotes.forEach(n=>{
-        n.addEventListener('animationiteration', ()=> triggerSing(mouthRight, 260 + Math.random()*160));
-        n.addEventListener('animationstart', ()=> triggerSing(mouthRight, 260 + Math.random()*160));
-      });
-      setInterval(()=>{
-        if(Math.random() < 0.14) triggerSing(mouthLeft, 220 + Math.random()*220);
-        if(Math.random() < 0.14) triggerSing(mouthRight, 220 + Math.random()*220);
-      }, 900);
-
-    })();
+    // Buat love jatuh secara acak
+    const colors = ["#ff9aa2","#ffb3c1","#ffc6d0","#ffdede"];
+    function createHeart(){
+      const heart=document.createElement("div");
+      heart.className="heart";
+      heart.style.left=Math.random()*100+"vw";
+      heart.style.background=colors[Math.floor(Math.random()*colors.length)];
+      const duration=4+Math.random()*3;
+      heart.style.animationDuration=duration+"s";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),duration*1000);
+    }
+    setInterval(createHeart,900); // tidak terlalu ramai
   </script>
 </body>
 </html>
