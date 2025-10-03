@@ -12,12 +12,13 @@
       align-items:center;
       height:100vh;
       background:linear-gradient(180deg,#fff7fb,#fffefb);
-      font-family:"Comic Sans MS",cursive, sans-serif;
+      font-family:"Comic Sans MS",cursive,sans-serif;
       overflow:hidden;
     }
     .container{
       text-align:center;
       position:relative;
+      z-index:2;
     }
     h1{
       color:#6f3b5a;
@@ -25,6 +26,11 @@
       font-size:28px;
       letter-spacing:2px;
       text-shadow:0 1px 2px rgba(0,0,0,0.1);
+      animation:pulse 2s infinite ease-in-out;
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
     }
     img{
       width:320px;
@@ -37,12 +43,12 @@
     .note{
       position:absolute;
       font-size:22px;
-      color:#ff9aa2;
       opacity:0;
       animation:floatNote 3s ease-in-out infinite;
+      z-index:3;
     }
-    .note.right{ left:64%; top:48%; color:#ffb3c1; }
-    .note.left{ left:30%; top:48%; color:#ffccd5; }
+    .note.left{ left:30%; top:52%; color:#ff9aa2; }
+    .note.right{ left:64%; top:52%; color:#ffb3c1; }
 
     .note:nth-child(1){ animation-delay:0s; }
     .note:nth-child(2){ animation-delay:.8s; }
@@ -64,23 +70,25 @@
       background:#ff9aa2;
       transform:rotate(45deg);
       opacity:0.8;
-      animation:fall 6s linear infinite;
+      animation:fall linear forwards;
+      top:-20px;
+      z-index:1;
     }
     .heart:before,.heart:after{
       content:"";
       position:absolute;
       width:18px;
       height:18px;
-      background:#ff9aa2;
+      background:inherit;
       border-radius:50%;
     }
     .heart:before{ top:-9px; left:0; }
     .heart:after{ left:-9px; top:0; }
 
     @keyframes fall{
-      0%{ transform:translateY(-10vh) rotate(45deg); opacity:0; }
-      10%{ opacity:1; }
-      100%{ transform:translateY(110vh) rotate(45deg); opacity:0; }
+      0%   { top:-20px; opacity:0; }
+      10%  { opacity:1; }
+      100% { top:110%; opacity:0; }
     }
   </style>
 </head>
@@ -108,11 +116,12 @@
       heart.className="heart";
       heart.style.left=Math.random()*100+"vw";
       heart.style.background=colors[Math.floor(Math.random()*colors.length)];
-      heart.style.animationDuration=(4+Math.random()*3)+"s";
+      const duration=4+Math.random()*3;
+      heart.style.animationDuration=duration+"s";
       document.body.appendChild(heart);
-      setTimeout(()=>heart.remove(),7000);
+      setTimeout(()=>heart.remove(),duration*1000);
     }
-    setInterval(createHeart,800); // tidak terlalu ramai
+    setInterval(createHeart,900); // tidak terlalu ramai
   </script>
 </body>
 </html>
