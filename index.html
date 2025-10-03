@@ -75,15 +75,23 @@
     }
 
     /* Musical notes (from mouths) */
-    .note{
-      position:absolute;
-      font-size: var(--note-size);
-      opacity:0;
-      pointer-events:none;
-      transform-origin:center;
-      user-select:none;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.06));
-    }
+/* Musical notes (dari mulut anak) */
+.note{
+  position:absolute;
+  pointer-events:none;
+  font-size: var(--note-size);
+  user-select:none;
+}
+
+.note span{
+  position:absolute;
+  opacity:0;
+  animation: floatNote 3s ease-in-out infinite;
+}
+
+.note span:nth-child(1){ left:0; animation-delay:0s; }
+.note span:nth-child(2){ left:12px; animation-delay:0.6s; }
+.note span:nth-child(3){ left:-12px; animation-delay:1.2s; }
 
     /* left child's mouth approx position - tweak if needed */
     .note.left { left: 24%; top: 40%; color:#ffb3b8; }
@@ -98,13 +106,13 @@
     .note .symbol:nth-child(2){ animation-delay: .28s; }
     .note .symbol:nth-child(3){ animation-delay: .6s; }
 
-    @keyframes sing {
-      0% { transform: translateY(0) scale(.85) rotate(-10deg); opacity:0; }
-      10% { opacity:1; transform: translateY(-2px) scale(1) rotate(0deg); }
-      40% { transform: translateY(-28px) scale(1.02) rotate(6deg); opacity:0.9; }
-      80% { transform: translateY(-56px) scale(0.8) rotate(-14deg); opacity:0.5; }
-      100% { transform: translateY(-80px) scale(0.6) rotate(-30deg); opacity:0; }
-    }
+@keyframes floatNote {
+  0%   { transform: translateY(0) scale(0.9); opacity:0; }
+  10%  { opacity:1; }
+  40%  { transform: translateY(-40px) scale(1.05) rotate(10deg); opacity:1; }
+  70%  { transform: translateY(-80px) scale(0.9) rotate(-10deg); opacity:0.6; }
+  100% { transform: translateY(-120px) scale(0.7) rotate(-20deg); opacity:0; }
+}
 
     /* little pulsing hearts next to kids */
     .mini-heart{
