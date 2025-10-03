@@ -10,6 +10,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       font-family: 'Comic Sans MS', cursive, sans-serif;
       overflow: hidden;
@@ -18,15 +19,41 @@
     h1 {
       font-size: 3em;
       color: #fff;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+      margin-bottom: 40px;
       z-index: 2;
+    }
+    .couple {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      z-index: 2;
+      font-size: 4em;
+      animation: sing 1s infinite alternate;
+    }
+    .boy, .girl {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .note {
+      font-size: 1em;
+      animation: floatNote 2s infinite ease-in-out;
+      opacity: 0.8;
+    }
+    @keyframes sing {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+    @keyframes floatNote {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-30px); opacity: 0; }
     }
     .hearts {
       position: absolute;
       width: 100%;
       height: 100%;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       z-index: 1;
       overflow: hidden;
     }
@@ -45,6 +72,12 @@
 </head>
 <body>
   <h1>💖 I LOVE U MELLO 💖</h1>
+  
+  <div class="couple">
+    <div class="boy">👦<div class="note">🎵</div></div>
+    <div class="girl">👧<div class="note">🎶</div></div>
+  </div>
+
   <div class="hearts"></div>
 
   <script>
