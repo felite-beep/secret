@@ -4,7 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>I LOVE U MELLO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* --- dasar layout --- */
+    :root{ --accent1:#9B4AB0; --accent2:#C439C1; }
+    html,body{height:100%}
     body{
       margin:0;
       display:flex;
@@ -14,74 +18,125 @@
       background:linear-gradient(180deg,#fff7fb,#fffefb);
       font-family:"Comic Sans MS",cursive,sans-serif;
       overflow:hidden;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
     .container{
       text-align:center;
       position:relative;
       z-index:2;
+      width: min(420px, 92vw);
     }
     h1{
       color:#6f3b5a;
-      margin-bottom:15px;
+      margin:8px 0 10px;
       font-size:28px;
       letter-spacing:2px;
-      text-shadow:0 1px 2px rgba(0,0,0,0.1);
+      text-shadow:0 1px 2px rgba(0,0,0,0.08);
       animation:pulse 2s infinite ease-in-out;
+      font-family:'Dancing Script', cursive;
     }
-    @keyframes pulse{
-      0%,100%{transform:scale(1);}
-      50%{transform:scale(1.05);}
-    }
+    @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
 
-    /* image wrapper so we can position mouths relative to image */
+    .subtitle{
+      color:#525252;
+      font-size:16px;
+      margin-bottom:12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    }
+    @media (max-width:420px){ .subtitle{font-size:14px} }
+
+    /* --- image wrapper & mouths --- */
     .image-wrap{
       position:relative;
-      width:320px; /* keep same as your original image width */
+      width:320px; /* ubah jika perlu */
       margin:0 auto;
+      touch-action:none; /* untuk drag yang halus */
     }
+    @media (max-width:420px){ .image-wrap{ width:260px } }
+
     .image-wrap img{
       display:block;
       width:100%;
       height:auto;
       user-select:none;
       -webkit-user-drag:none;
+      border-radius:10px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.06);
     }
 
-    span {
-      color: #525252;
-      font-size: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    .mouth{
+      position:absolute;
+      width:44px;
+      height:20px;
+      transform-origin:center top;
+      border-radius:50%/60%;
+      background:#3b1f27;
+      box-shadow: inset 0 -6px 0 rgba(255,150,170,0.06);
+      z-index:6;
+      cursor:grab;
+      touch-action:none;
+      transition:width .12s ease, height .12s ease;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      overflow:visible;
     }
-    @media only screen and (max-width: 767px) {
-      span {font-size: 14px;}
-      .image-wrap{ width:260px; } /* scale down on small screens */
+    .mouth:active{ cursor:grabbing; }
+    .mouth .tongue{
+      position:absolute;
+      left:50%;
+      bottom:3px;
+      transform:translateX(-50%) scaleY(0);
+      width:70%;
+      height:40%;
+      border-radius:50%;
+      background:#ff9aa2;
+      opacity:0;
+      transition:opacity 120ms, transform 120ms;
+      z-index:7;
     }
+    .mouth.sing{ animation:singBurst 360ms linear forwards; }
+    .mouth.sing .tongue{ transform:translateX(-50%) scaleY(1); opacity:1; }
+    @keyframes idleSing{0%{transform:scaleY(0.86)}50%{transform:scaleY(1)}100%{transform:scaleY(0.86)}}
+    .mouth{ animation:idleSing 1200ms ease-in-out infinite; }
+    @keyframes singBurst{
+      0%{ transform:scaleY(0.9); }
+      30%{ transform:scaleY(1.6); }
+      60%{ transform:scaleY(1.02); }
+      100%{ transform:scaleY(0.95); }
+    }
+    /* ukuran/responsif mulut */
+    @media (max-width:420px){ .mouth{ width:36px; height:16px } }
 
-    .handwriting { font-family: 'Dancing Script', cursive; }
-
-    /* Not-not musik (kept from your original) */
+    /* --- music notes (dari mulut) --- */
     .note{
       position:absolute;
       font-size:22px;
       opacity:0;
       animation:floatNote 3s ease-in-out infinite;
-      z-index:3;
+      z-index:5;
       pointer-events:none;
+      user-select:none;
     }
-    .note.left{ left:32%; top:52%; color:#9B4AB0; }
-    .note.right{ left:63%; top:52%; color:#C439C1; }
-    .note:nth-child(1){ animation-delay:0s; }
-    .note:nth-child(2){ animation-delay:.8s; }
-    .note:nth-child(3){ animation-delay:1.6s; }
+    .note.left{ left:18%; top:56%; color:var(--accent1); }
+    .note.right{ left:64%; top:56%; color:var(--accent2); }
+    .note.left:nth-of-type(1){ animation-delay:0s; }
+    .note.left:nth-of-type(2){ animation-delay:.8s; }
+    .note.left:nth-of-type(3){ animation-delay:1.6s; }
+    .note.right:nth-of-type(4){ animation-delay:0s; }
+    .note.right:nth-of-type(5){ animation-delay:.8s; }
+    .note.right:nth-of-type(6){ animation-delay:1.6s; }
+
     @keyframes floatNote{
       0%{ transform:translateY(0) scale(0.9); opacity:0; }
       10%{ opacity:1; }
-      40%{ transform:translateY(-40px) scale(1.1) rotate(10deg); opacity:1; }
-      70%{ transform:translateY(-80px) scale(0.9) rotate(-10deg); opacity:.6; }
-      100%{ transform:translateY(-120px) scale(0.7) rotate(-20deg); opacity:0; }
+      40%{ transform:translateY(-40px) scale(1.1) rotate(8deg); opacity:1; }
+      70%{ transform:translateY(-80px) scale(0.9) rotate(-8deg); opacity:.6; }
+      100%{ transform:translateY(-120px) scale(0.7) rotate(-18deg); opacity:0; }
     }
 
-    /* Hati jatuh (kept) */
+    /* --- falling hearts --- */
     .heart{
       position:absolute;
       width:18px;
@@ -92,6 +147,7 @@
       animation:fall linear forwards;
       top:-20px;
       z-index:1;
+      border-radius:2px;
     }
     .heart:before,.heart:after{
       content:"";
@@ -104,191 +160,252 @@
     .heart:before{ top:-9px; left:0; }
     .heart:after{ left:-9px; top:0; }
     @keyframes fall{
-      0%   { top:-20px; opacity:0; }
-      10%  { opacity:1; }
-      100% { top:110%; opacity:0; }
+      0%{ top:-20px; opacity:0; }
+      10%{ opacity:1; }
+      100%{ top:110%; opacity:0; }
     }
 
-    /* ---------- Singing mouths ---------- */
-    .mouth{
-      position:absolute;
-      width:40px;
-      height:18px;
-      left:50%;
-      top:50%;
-      transform-origin:center top;
-      border-radius:50% / 60%;
-      background:#3b1f27; /* mouth interior color */
-      box-shadow: inset 0 -6px 0 rgba(255,150,170,0.08);
-      z-index:4;
-      /* idle subtle "breath" open/close */
-      animation:idleSing 1200ms ease-in-out infinite;
+    /* --- controls & css output --- */
+    .controls{ text-align:center; margin-top:12px; font-size:13px; }
+    .btn{
+      padding:8px 12px; border-radius:8px; border:none; background:var(--accent1); color:white;
+      cursor:pointer; margin:0 6px; font-weight:600;
+      box-shadow:0 6px 16px rgba(155,74,176,0.12);
     }
-    .mouth .tongue{
-      position:absolute;
-      left:50%;
-      bottom:3px;
-      transform:translateX(-50%) scaleY(0);
-      width:70%;
-      height:40%;
-      border-radius:50%;
-      background:#ff9aa2;
-      opacity:0;
-      transition:opacity 120ms, transform 120ms;
-      z-index:5;
-    }
-    /* bigger open for singing bursts */
-    .mouth.sing{
-      animation:singBurst 360ms linear forwards;
-    }
-    .mouth.sing .tongue{
-      transform:translateX(-50%) scaleY(1);
-      opacity:1;
-    }
-
-    /* idle breathing */
-    @keyframes idleSing{
-      0%{ transform:scaleY(0.85); }
-      50%{ transform:scaleY(1.0); }
-      100%{ transform:scaleY(0.85); }
-    }
-    /* quick open-close burst when singing */
-    @keyframes singBurst{
-      0%{ transform:scaleY(0.9); }
-      30%{ transform:scaleY(1.6); }
-      60%{ transform:scaleY(1.0); }
-      100%{ transform:scaleY(0.95); }
-    }
-
-    /* left & right mouth positions - tweak these percentages to fit your image */
-    .mouth.left{
-      left:22%;  /* percentage of .image-wrap */
-      top:62%;
-      width:44px;
-      height:20px;
-    }
-    .mouth.right{
-      left:66%;
-      top:62%;
-      width:44px;
-      height:20px;
-    }
-
-    /* smaller on small screens */
-    @media only screen and (max-width: 420px){
-      .mouth{ width:36px; height:16px; }
-      .mouth.left{ left:20%; top:63%; }
-      .mouth.right{ left:66%; top:63%; }
+    .btn:active{ transform:translateY(1px) }
+    .coords{ margin-top:8px; color:#444; font-family:monospace; font-size:13px; }
+    .css-output{
+      font-family:monospace; background:#fff; padding:8px; border-radius:8px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06); display:inline-block; margin-top:8px; white-space:pre-wrap;
     }
 
   </style>
-
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <h1 class="handwriting">I Love You, Mello</h1>
-    <span>You’re the <i>mello</i>-dy that I never get tired of hearing.</span>
+    <h1>I Love You, Mello</h1>
+    <div class="subtitle">You’re the <i>mello</i>-dy that I never get tired of hearing.</div>
 
-    <!-- image + mouth overlays -->
+    <!-- IMAGE + MOUTHS -->
     <div class="image-wrap" id="photoWrap">
-      <img src="couple.png" alt="Couple" draggable="false" />
-      <!-- mouths (positioned with percentages above) -->
-      <div class="mouth left" id="mouthLeft"><div class="tongue"></div></div>
-      <div class="mouth right" id="mouthRight"><div class="tongue"></div></div>
+      <!-- Ganti 'couple.png' dengan path gambarmu -->
+      <img id="mainImg" src="couple.png" alt="Couple" draggable="false" />
+
+      <!-- Mulut (posisi awal dalam persen, nanti bisa drag) -->
+      <div class="mouth left" id="mouthLeft" style="left:22%; top:62%;">
+        <div class="tongue"></div>
+      </div>
+      <div class="mouth right" id="mouthRight" style="left:66%; top:62%;">
+        <div class="tongue"></div>
+      </div>
     </div>
 
-    <!-- Not-not keluar dari mulut kiri -->
+    <!-- not-not (di luar image-wrap agar melayang bebas) -->
     <div class="note left" data-side="left">♪</div>
     <div class="note left" data-side="left">♫</div>
     <div class="note left" data-side="left">♬</div>
 
-    <!-- Not-not keluar dari mulut kanan -->
     <div class="note right" data-side="right">♪</div>
     <div class="note right" data-side="right">♫</div>
     <div class="note right" data-side="right">♬</div>
+
+    <!-- controls -->
+    <div class="controls">
+      <button class="btn" id="resetBtn">Reset posisi</button>
+      <button class="btn" id="copyBtn">Copy CSS</button>
+      <div class="coords" id="coords">Left: <span id="lLeft">22%</span> | Top: <span id="tLeft">62%</span> — Right: <span id="lRight">66%</span> | Top: <span id="tRight">62%</span></div>
+      <div id="cssOut" class="css-output" style="display:none; margin-top:10px;"></div>
+    </div>
   </div>
 
   <script>
-    // Hearts (kept your original)
-    const colors = ["#ff9aa2","#ffb3c1","#ffc6d0","#ffdede"];
-    function createHeart(){
-      const heart=document.createElement("div");
-      heart.className="heart";
-      heart.style.left=Math.random()*100+"vw";
-      heart.style.background=colors[Math.floor(Math.random()*colors.length)];
-      const duration=4+Math.random()*3;
-      heart.style.animationDuration=duration+"s";
-      document.body.appendChild(heart);
-      setTimeout(()=>heart.remove(),duration*1000);
-    }
-    setInterval(createHeart,900);
+    /* ---------- Falling hearts (random) ---------- */
+    (function(){
+      const colors = ["#ff9aa2","#ffb3c1","#ffc6d0","#ffdede"];
+      function createHeart(){
+        const heart=document.createElement("div");
+        heart.className="heart";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.background = colors[Math.floor(Math.random()*colors.length)];
+        const duration = 4 + Math.random()*3;
+        heart.style.animationDuration = duration + "s";
+        document.body.appendChild(heart);
+        setTimeout(()=> heart.remove(), duration*1000);
+      }
+      setInterval(createHeart, 900);
+    })();
 
-    // Singing mouth interaction
-    const mouthLeft = document.getElementById('mouthLeft');
-    const mouthRight = document.getElementById('mouthRight');
-    const leftNotes = document.querySelectorAll('.note.left');
-    const rightNotes = document.querySelectorAll('.note.right');
-
-    // helper: quickly add 'sing' class then remove
-    function triggerSing(mouth, length=420){
-      if(!mouth) return;
-      // reset to allow retriggering quickly
-      mouth.classList.remove('sing');
-      // force reflow
-      void mouth.offsetWidth;
-      mouth.classList.add('sing');
-      // remove after given ms so idle resumes
-      setTimeout(()=> mouth.classList.remove('sing'), length);
-    }
-
-    // When a note animation iteration occurs, trigger corresponding mouth
-    leftNotes.forEach(n => {
-      n.addEventListener('animationiteration', () => {
-        // randomize short length to feel natural
-        triggerSing(mouthLeft, 300 + Math.random()*180);
-      });
-      // also when enters viewport first time (animationstart)
-      n.addEventListener('animationstart', () => {
-        triggerSing(mouthLeft, 300 + Math.random()*180);
-      });
-    });
-
-    rightNotes.forEach(n => {
-      n.addEventListener('animationiteration', () => {
-        triggerSing(mouthRight, 300 + Math.random()*180);
-      });
-      n.addEventListener('animationstart', () => {
-        triggerSing(mouthRight, 300 + Math.random()*180);
-      });
-    });
-
-    // Optional: a gentle random sing so they don't stay perfectly in sync forever
-    setInterval(()=>{
-      // small chance to hiccup a sing for realism
-      if(Math.random() < 0.18) triggerSing(mouthLeft, 220 + Math.random()*240);
-      if(Math.random() < 0.18) triggerSing(mouthRight, 220 + Math.random()*240);
-    }, 900);
-
-    // If your image has different dimensions, you can compute mouth offsets dynamically.
-    // Below is a helper that (optional) recalculates mouth positions from pixel offsets.
-    // Uncomment and adapt if you prefer to place mouths precisely with pixel numbers.
-
-    /*
-    function setMouthPosition(mouthEl, pxLeft, pxTop){
+    /* ---------- Singing mouths + dragging + copy css ---------- */
+    (function(){
       const wrap = document.getElementById('photoWrap');
-      const w = wrap.clientWidth;
-      const h = wrap.clientHeight;
-      mouthEl.style.left = (pxLeft / w * 100) + '%';
-      mouthEl.style.top  = (pxTop  / h * 100) + '%';
-    }
-    // Example usage after image loads:
-    const img = document.querySelector('.image-wrap img');
-    img.addEventListener('load', ()=>{
-      // setMouthPosition(mouthLeft, 70, 160); // pixel coords relative to image natural layout
-      // setMouthPosition(mouthRight, 200, 160);
-    });
-    */
+      const img = document.getElementById('mainImg');
+      const mouthLeft = document.getElementById('mouthLeft');
+      const mouthRight = document.getElementById('mouthRight');
+      const leftNotes = document.querySelectorAll('.note.left');
+      const rightNotes = document.querySelectorAll('.note.right');
+
+      // Convert initial percent left/top to px (so dragging is pixel based)
+      function convertInitialPercents(){
+        const w = wrap.clientWidth, h = wrap.clientHeight;
+        [mouthLeft, mouthRight].forEach(m=>{
+          const cs = getComputedStyle(m);
+          if(cs.left.includes('%')){
+            m.style.left = (parseFloat(cs.left)/100 * w) + 'px';
+          }
+          if(cs.top.includes('%')){
+            m.style.top = (parseFloat(cs.top)/100 * h) + 'px';
+          }
+        });
+        updateDisplays();
+      }
+
+      // update coordinate display in percent
+      const coords = {
+        lLeft: document.getElementById('lLeft'),
+        tLeft: document.getElementById('tLeft'),
+        lRight: document.getElementById('lRight'),
+        tRight: document.getElementById('tRight'),
+        cssOut: document.getElementById('cssOut'),
+        copyBtn: document.getElementById('copyBtn'),
+        resetBtn: document.getElementById('resetBtn')
+      };
+      function updateDisplays(){
+        const w = wrap.clientWidth, h = wrap.clientHeight;
+        function pct(el){
+          return (el.offsetLeft / w * 100).toFixed(2) + '%';
+        }
+        function pctTop(el){
+          return (el.offsetTop / h * 100).toFixed(2) + '%';
+        }
+        coords.lLeft.textContent = pct(mouthLeft);
+        coords.tLeft.textContent = pctTop(mouthLeft);
+        coords.lRight.textContent = pct(mouthRight);
+        coords.tRight.textContent = pctTop(mouthRight);
+      }
+
+      /* Dragging (pointer events) */
+      let dragEl = null;
+      let offsetX = 0, offsetY = 0;
+
+      function onPointerDown(e){
+        dragEl = e.currentTarget;
+        const r = dragEl.getBoundingClientRect();
+        offsetX = e.clientX - r.left;
+        offsetY = e.clientY - r.top;
+        try{ dragEl.setPointerCapture(e.pointerId); }catch(e){}
+        dragEl.classList.add('dragging');
+      }
+      function onPointerMove(e){
+        if(!dragEl) return;
+        const wrapRect = wrap.getBoundingClientRect();
+        let x = e.clientX - wrapRect.left - offsetX;
+        let y = e.clientY - wrapRect.top - offsetY;
+        // clamp
+        x = Math.max(0, Math.min(x, wrap.clientWidth - dragEl.offsetWidth));
+        y = Math.max(0, Math.min(y, wrap.clientHeight - dragEl.offsetHeight));
+        dragEl.style.left = x + 'px';
+        dragEl.style.top  = y + 'px';
+        updateDisplays();
+      }
+      function onPointerUp(e){
+        if(!dragEl) return;
+        try{ dragEl.releasePointerCapture(e.pointerId); }catch(e){}
+        dragEl.classList.remove('dragging');
+        dragEl = null;
+      }
+
+      [mouthLeft, mouthRight].forEach(m=>{
+        // convert percent initial styling to px on image load
+        // attach pointer listeners
+        m.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        m.addEventListener('dragstart', e=> e.preventDefault());
+      });
+
+      // reset button
+      coords.resetBtn.addEventListener('click', ()=>{
+        // default percent values -> convert to px
+        const w = wrap.clientWidth, h = wrap.clientHeight;
+        mouthLeft.style.left = (0.22 * w) + 'px';
+        mouthLeft.style.top  = (0.62 * h) + 'px';
+        mouthRight.style.left= (0.66 * w) + 'px';
+        mouthRight.style.top = (0.62 * h) + 'px';
+        updateDisplays();
+        coords.cssOut.style.display = 'none';
+      });
+
+      // copy CSS
+      coords.copyBtn.addEventListener('click', async ()=>{
+        const w = wrap.clientWidth, h = wrap.clientHeight;
+        function makeCSS(el, cls){
+          const leftPct = (el.offsetLeft / w * 100).toFixed(2) + '%';
+          const topPct  = (el.offsetTop  / h * 100).toFixed(2) + '%';
+          return `.${cls} { left: ${leftPct}; top: ${topPct}; }`;
+        }
+        const cssText = makeCSS(mouthLeft, 'mouth.left') + '\n' + makeCSS(mouthRight, 'mouth.right');
+        coords.cssOut.textContent = cssText;
+        coords.cssOut.style.display = 'block';
+        try{
+          await navigator.clipboard.writeText(cssText);
+          coords.copyBtn.textContent = 'Copied!';
+          setTimeout(()=> coords.copyBtn.textContent = 'Copy CSS', 1200);
+        }catch(e){
+          coords.copyBtn.textContent = 'Copy failed';
+          setTimeout(()=> coords.copyBtn.textContent = 'Copy CSS', 1400);
+        }
+      });
+
+      // When image loads or window resizes, convert initial percentages and update display
+      function onReady(){
+        convertInitialPercents();
+      }
+      if(img.complete) onReady();
+      else img.addEventListener('load', onReady);
+      window.addEventListener('resize', ()=> {
+        // keep approx same relative location: convert current px -> percent -> back to px
+        const wOld = wrap.clientWidth || 320;
+        const hOld = wrap.clientHeight || 200;
+        const l1 = mouthLeft.offsetLeft / wOld;
+        const t1 = mouthLeft.offsetTop  / hOld;
+        const l2 = mouthRight.offsetLeft / wOld;
+        const t2 = mouthRight.offsetTop / hOld;
+        // apply with new sizes
+        setTimeout(()=>{
+          mouthLeft.style.left = (l1 * wrap.clientWidth) + 'px';
+          mouthLeft.style.top  = (t1 * wrap.clientHeight) + 'px';
+          mouthRight.style.left= (l2 * wrap.clientWidth) + 'px';
+          mouthRight.style.top = (t2 * wrap.clientHeight) + 'px';
+          updateDisplays();
+        }, 60);
+      });
+
+      /* ---------- Trigger singing when notes animate ---------- */
+      function triggerSing(mouth, length=420){
+        if(!mouth) return;
+        mouth.classList.remove('sing');
+        void mouth.offsetWidth;
+        mouth.classList.add('sing');
+        setTimeout(()=> mouth.classList.remove('sing'), length);
+      }
+
+      // Attach animation events for left/right notes
+      leftNotes.forEach(n=>{
+        n.addEventListener('animationiteration', ()=> triggerSing(mouthLeft, 300 + Math.random()*180));
+        n.addEventListener('animationstart', ()=> triggerSing(mouthLeft, 300 + Math.random()*180));
+      });
+      rightNotes.forEach(n=>{
+        n.addEventListener('animationiteration', ()=> triggerSing(mouthRight, 300 + Math.random()*180));
+        n.addEventListener('animationstart', ()=> triggerSing(mouthRight, 300 + Math.random()*180));
+      });
+
+      // slight random singing to look natural
+      setInterval(()=>{
+        if(Math.random() < 0.16) triggerSing(mouthLeft, 220 + Math.random()*240);
+        if(Math.random() < 0.16) triggerSing(mouthRight, 220 + Math.random()*240);
+      }, 900);
+
+    })();
 
   </script>
 </body>
